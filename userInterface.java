@@ -262,9 +262,7 @@ public class userInterface{
 			case ACCEPT_ORDERS: acceptOrders();
 									  break;
 			case SHOW_INVOICE; showInvoice();
-								break;
-
-			
+								break;	
 								 
 			}
 		}
