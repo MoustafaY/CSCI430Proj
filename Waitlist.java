@@ -1,39 +1,26 @@
 import java.util.*;
 import java.io.*;
-import java.lang.*;
-
 public class Waitlist implements Serializable {
   private static final long serialVersionUID = 1L;
-  private Product product;
-  private client client;
-  private int quantity;
+  private List<waitListItem> waitItem;
 
-  public Waitlist(client c, Product p, int q){
-    this.client   = c;
-    this.product  = p;
-    this.quantity = q;
+  public Waitlist() {
+    waitItem = new LinkedList<waitListItem>();
+  }
+
+
+  public boolean insertProductToCart(Product product, int quantity) {
+    waitListItem item = new waitListItem(product, quantity);
+    waitItem.add(item);
+    return true;
   }
   
-  public Product getProduct(){
-    return product;
+  public Iterator<waitListItem> getWaitListProducts() {
+    return waitItem.iterator();
   }
 
-  public Client getClient(){
-    return client;
-  }
-
-  public int getQuantity(){
-    return quantity;
-  }
-
-  public void updateQuantity(int newQ){
-    this.quantity = newQ;
-  }
   
   public String toString() {
-    return client.toString() + "Quantity: " + quantity + product.toString();
-  }
-  public String toStringClient() {
-    return "Product Name: " + product.getproductname() + ", Quantity: " + quantity;
+    return waitItem.toString();
   }
 }
