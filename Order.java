@@ -1,50 +1,71 @@
 import java.util.*;
 import java.io.*;
-
-public class Order implements Serializable {
-
-    private static final long serialVersionUID = 1L;
-    private String clientId;
-    private List itemList = new LinkedList();
-
-    public Order(String clientId) {
-        this.clientId = clientId;
-    }
+import java.lang.*;
 
 
-    public Iterator getItemList(){
-        return itemList.iterator();
-    }
-    public List getItemLists(){
-        return itemList;
-    }
+public class Order implements Serializable{
+  private static final long serialVersionUID = 1L;
+  private double TotalPrice = 0;
+  private List<Product> products = new LinkedList<Product>();
 
-    public void addItem(Item i) {
-        itemList.add(i);
-    }
+  public Order(){}
 
-    public String getClientId() {
-        return clientId;
-    }
+  public boolean AddProdToOrder(Product product, int quantity, Client client){
+    boolean success = products.add(product);
+    if(success)
+    {
 
-    public Item find(String clientId) {
-        for (Iterator iterator = itemList.iterator(); iterator.hasNext();) {
-            Item item = (Item) iterator.next();
-            if (clientId.equals(item.getProductId())) {
-                return item;
-            }
+      Iterator<Supplier> suppliers = product.getSuppliers();
+      Supplier temp_s;
+      int TempQuantity = 0;
+      double temp_p;
+      while ((suppliers.hasNext()))
+      {
+        temp_s = suppliers.next();
+        TempQuantity = temp_s.getQuantity();
+        if (TempQuantity > 0)
+        {
+          if (TempQuantity >= quantity)
+          {
+            temp_s.setNewQuantity(quantity);
+            temp_p = temp_s.getPrice();
+            this.TotalPrice = TotalPrice + (quantity * temp_p);
+            quantity = 0;
+          }
+          else
+          {
+            quantity = quantity - TempQuantity;
+            temp_s.setNewQuantity(TempQuantity);
+            temp_p = temp_s.getPrice();
+            this.TotalPrice = TotalPrice + (TempQuantity * temp_p);
+          }
         }
-        return null;
-    }
+      }
 
-    public void printOrder() {
-        for (int i = 0; i < itemList.size(); i++) {
-            System.out.println(itemList.get(i));
+      if (quantity != 0)
+      {
+        Waitlist w = new Waitlist(client, product, quantity);
+        success = client.addProductToWaitlist(w);
+        success = product.addClientToWaitlist(w);
+        if (success){
+          System.out.println("Order successful, but " + quantity + " were added to a waitlist.");
         }
+        else{
+          System.out.println("Order successful, but products weren't successfully added to a waitlist.");
+        }
+      }
 
+      return true;
     }
+    else
+    {
+      return false;
+    }
+  }
 
-    public String toString() {
-        return "Test";
-    }
+  public double getTotal(){
+    return TotalPrice;
+  }
+
+
 }
