@@ -23,66 +23,6 @@ public class ProductList implements Serializable {
      return products.iterator();
   }
   
-  public boolean editProductName(String iD, String name) {
-	  	String temp;
-		for(int i=0; i<products.size(); i++) {
-			temp = ((Product) products.get(i)).getId();
-			if(temp.equals(iD)) {
-				((Product) products.get(i)).setName(name);
-				return true;
-			}
-		}
-		return false;
-	}
-	
-  public boolean editProductQuantity(String iD, int quantity) {
-	  	String temp;
-		for(int i=0; i<products.size(); i++) {
-			temp = ((Product) products.get(i)).getId();
-			if(temp.equals(iD)) {
-				((Product) products.get(i)).setQuantity(quantity);
-				return true;
-			}
-		}
-		return false;
-	}
-	
-  public boolean editProductSaleP(String iD, double saleP) {
-	  	String temp;
-		for(int i=0; i<products.size(); i++) {
-			temp = ((Product) products.get(i)).getId();
-			if(temp.equals(iD)) {
-				((Product) products.get(i)).setSalePrice(saleP);
-				return true;
-			}
-		}
-		return false;
-	}
-	
-  public boolean editProductSuppP(String iD, double suppP) {
-	  	String temp;
-		for(int i=0; i<products.size(); i++) {
-			temp = ((Product) products.get(i)).getId();
-			if(temp.equals(iD)) {
-				((Product) products.get(i)).setSupplyPrice(suppP);
-				return true;
-			}
-		}
-		return false;
-	}
-  
-  public Product getProduct(String iD) {
-		String temp;
-		int count = 0;
-		for(int i=0; i<products.size(); i++) {
-			temp = ((Product) products.get(i)).getId();
-			if(temp.equals(iD)) {
-				break;
-			}
-			count+=1;
-		}
-		return (Product) products.get(count);
-	}
   private void writeObject(java.io.ObjectOutputStream output) {
     try {
       output.defaultWriteObject();
