@@ -27,9 +27,8 @@ public class wareHouse implements Serializable{
 	
 	//Supplier class
 	public supplier addSupplier(String name) {
-		supplier tempAdd = new supplier(name);
-		suppList.insertSupplier(tempAdd);
-		return tempAdd;
+		supplier temp = suppList.insertSupplier(name);
+		return temp;
 	}
 	
 	public supplier editSupplier(String name, String iD) {
