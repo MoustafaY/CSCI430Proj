@@ -2,8 +2,8 @@ import java.util.*;
 public class InventoryTester {
   
   public static void main(String[] s) {
-     Product p1 = new Product("product1", 1, 1.99, 0.99);
-     Product p2 = new Product("product2", 1, 4.99, 2.50);
+     Product p1 = new Product("product1", 3, 2.00, 1.00);
+     Product p2 = new Product("product2", 5, 4.00, 2.00);
      Inventory inventory = Inventory.instance();
      inventory.addToInventory(p1, 2);
      inventory.addToInventory(p2, 4);
