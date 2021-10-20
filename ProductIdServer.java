@@ -1,13 +1,19 @@
+import java.util.*;
 import java.io.*;
-public class ProductIDServer implements Serializable {
+import java.io.Serializable;
+
+public class ProductIdServer implements Serializable {
+
+   
+    private static final long serialVersionUID = 1L;
   private  int idCounter;
-  private static ProductIDServer server;
-  private ProductIDServer() {
+  private static ProductIdServer server;
+  private ProductIdServer() {
     idCounter = 1;
   }
-  public static ProductIDServer instance() {
+  public static ProductIdServer instance() {
     if (server == null) {
-      return (server = new ProductIDServer());
+      return (server = new ProductIdServer());
     } else {
       return server;
     }
@@ -20,7 +26,7 @@ public class ProductIDServer implements Serializable {
   }
   public static void retrieve(ObjectInputStream input) {
     try {
-      server = (ProductIDServer) input.readObject();
+      server = (ProductIdServer) input.readObject();
     } catch(IOException ioe) {
       ioe.printStackTrace();
     } catch(Exception cnfe) {
@@ -39,7 +45,7 @@ public class ProductIDServer implements Serializable {
     try {
       input.defaultReadObject();
       if (server == null) {
-        server = (ProductIDServer) input.readObject();
+        server = (ProductIdServer) input.readObject();
       } else {
         input.readObject();
       }
