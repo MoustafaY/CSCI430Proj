@@ -18,8 +18,8 @@ public class userInterface{
 	private static final int EDIT_PRODUCT_SUPPLY = 11;
 	private static final int PRINT_PRODUCT = 12;
 	private static final int SHOW_WAILIST = 13;
-	private static final int ACCEPT_ORDERS = 14;
-	private static final int PRINT_INVOICE = 15;
+	private static final int PLACE_ORDER = 14;
+	private static final int SHOW_INVOICE = 15;
 	
 
 	private static wareHouse warehouse = new wareHouse();
@@ -191,6 +191,44 @@ public class userInterface{
 		warehouse.printProduct();
 	}
 	
+	public void showInvoice() {
+
+        try {
+            String clientId = getToken("Enter client ID");
+            if (warehouse.findClient(clientId)) {
+                Order o = warehouse.findOrder(clientId);
+                if (o != null) {
+                    o.printOrder();
+                }
+            } else {
+                System.out.println("Client is not found.");
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(UserInterface.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+  }
+//waitllisted orders by product
+	public void showWaitlist() {
+        try {
+            System.out.println("Show wait list for product.");
+            String pId = getToken("Enter product ID");
+            if (warehouse.findProduct(pId) != null) {
+                Iterator wholeWaitList = warehouse.getWaitList(pId);
+                while (wholeWaitList.hasNext()) {
+                    Waitlist waitList = (Waitlist) (wholeWaitList.next());
+                    System.out.println(waitList.toString());
+                }
+                
+            } else {
+                System.out.println("Product not found.");
+                
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(UserInterface.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+	
 	public void process() {
 		int command;
 		while((command = getCommand()) != EXIT) {
@@ -223,7 +261,7 @@ public class userInterface{
 									break;
 			case ACCEPT_ORDERS: acceptOrders();
 									  break;
-			case PRINT_INVOICE; printInvoice();
+			case SHOW_INVOICE; showInvoice();
 								break;
 
 			
