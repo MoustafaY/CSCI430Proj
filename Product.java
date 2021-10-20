@@ -80,6 +80,18 @@ public Supplier searcSuppList(Supplier supplier)
       }
       return null;
 }
+
+public Iterator<Waitlist> getWaitlistedClients() {
+	return waitlistedClients.iterator();
+}
+	
+public List<Supplier> getList() {
+	return productSupplier;
+}
+	
+public boolean addClientToWaitlist(Waitlist w) {
+	return waitlistedClients.add(w);
+}
 	
   public String toString() {
         return "Product: " + name + " ID: " + id + " Qty: " + quantity + " salePrice " + salePrice + " supplyPrice " + supplyPrice;
