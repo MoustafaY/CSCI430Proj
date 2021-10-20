@@ -1,50 +1,38 @@
-import java.util.*;
 import java.io.*;
-
+import java.util.*;
 public class Order implements Serializable {
+  private static final long serialVersionUID = 1L;
+  private client cli;
+  private String orderId;
+  private ShoppingCart orderedCart;  
 
-    private static final long serialVersionUID = 1L;
-    private String clientId;
-    private List itemList = new LinkedList();
+  public Order(client cli) {
+    this.orderId = (OrderIdServer.instance()).generateId();
+    this.cli = cli;
+    this.orderedCart = cli.getShoppingCart();
+  }
 
-    public Order(String clientId) {
-        this.clientId = clientId;
-    }
+  public Iterator<ShoppingCartItem> getOrderProducts() {
+    return orderedCart.getShoppingCartProducts();
+  }
 
+  public client getOrderClient() {
+    return cli;
+  }
 
-    public Iterator getItemList(){
-        return itemList.iterator();
-    }
-  public List getItemLists(){
-        return itemList;
-    }
+  public String getOrderId() {
+    return orderId;
+  }
 
-    public void addItem(Item i) {
-        itemList.add(i);
-    }
+  public ShoppingCart getOrderedCart() {
+    return orderedCart;
+  }
 
-    public String getClientId() {
-        return clientId;
-    }
+  public Boolean equals(String id) {
+    return this.orderId.equals(id);
+  }
 
-    public Item find(String clientId) {
-        for (Iterator iterator = itemList.iterator(); iterator.hasNext();) {
-            Item item = (Item) iterator.next();
-            if (clientId.equals(item.getProductId())) {
-                return item;
-            }
-        }
-        return null;
-    }
-
-    public void printOrder() {
-        for (int i = 0; i < itemList.size(); i++) {
-            System.out.println(itemList.get(i));
-        }
-
-    }
-
-    public String toString() {
-        return "Test";
-    }
+  public String toString() {
+      return "orderId " + orderId + " clientId " + cli.getId() + " ordered_products " + orderedCart.toString();
+  }
 }
