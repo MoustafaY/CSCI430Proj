@@ -17,9 +17,13 @@ public class userInterface{
 	private static final int EDIT_PRODUCT_SALE = 10;
 	private static final int EDIT_PRODUCT_SUPPLY = 11;
 	private static final int PRINT_PRODUCT = 12;
+	private static final int SHOW_WAILIST = 13;
+	private static final int ACCEPT_ORDERS = 14;
+	private static final int PRINT_INVOICE = 15;
+	
+
 	private static wareHouse warehouse = new wareHouse();
-	
-	
+		
 	private userInterface() {
 		warehouse = wareHouse.instance();
 	}
@@ -215,6 +219,14 @@ public class userInterface{
 									  break;
 			case PRINT_PRODUCT: printProduct();
 								break;
+			case SHOW_WAITLIST: showWaitlist();
+									break;
+			case ACCEPT_ORDERS: acceptOrders();
+									  break;
+			case PRINT_INVOICE; printInvoice();
+								break;
+
+			
 								 
 			}
 		}
