@@ -15,8 +15,10 @@ public class clientList implements Serializable{
 		}
 	}
 	
-	public void insertClient(client cli) {
-		clients.add(cli);
+	public client insertClient(String name) {
+		client temp = new client(name);
+		clients.add(temp);
+		return temp;
 	}
 	
 	public boolean editClient(String na, String iD) {
