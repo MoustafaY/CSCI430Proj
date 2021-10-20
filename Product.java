@@ -7,9 +7,10 @@ public class Product implements Serializable {
   private int quantity;
   private double salePrice;
   private double supplyPrice;
-  private List<Supplier> productSupplier = new LinkedList <Supplier>();
+  private List<supplier> productSupplier = new LinkedList <supplier>();
   private List<Waitlist> waitlistedClients = new LinkedList <Waitlist>();
   private static final String PRODUCT_STRING = "P";
+	
   public  Product (String name, int quantity, double salePrice, double supplyPrice) {
     this.name = name;
     this.quantity = quantity;
@@ -55,13 +56,13 @@ public double getSupplyPrice() {
         return this.id.equals(id);
   }
   
-public boolean link(Supplier supplier, int q, float sP, float suP) {
-	Supplier S = new Supplier(supplier,q,sP,suP);
-	return ProductSupplier.add(S) ? true: false;
+public boolean link(supplier supp) {
+	supplier S = new supplier(supp);
+	return productSupplier.add(S) ? true: false;
 }
 
-public boolean unlink(Supplier supplier) {
-	return ProductSupplier.remove(supplier) ? true: false;
+public boolean unlink(supplier supp) {
+	return productSupplier.remove(supp) ? true: false;
 }
 	
 public Iterator<Supplier> getSuppliers() {
