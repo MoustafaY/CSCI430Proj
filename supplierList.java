@@ -15,8 +15,10 @@ public class supplierList implements Serializable{
 		}
 	}
 	
-	public void insertSupplier(supplier supp) {
-		suppliers.add(supp);
+	public supplier insertSupplier(String name) {
+		supplier temp = new supplier(name);
+		suppliers.add(temp);
+		return temp;
 	}
 	
 	public boolean editSupplier(String na, String iD) {
