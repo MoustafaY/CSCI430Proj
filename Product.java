@@ -14,7 +14,7 @@ public class Product implements Serializable {
     this.quantity = quantity;
     this.salePrice = salePrice;
 	this.supplyPrice = supplyPrice;
-    id = PRODUCT_STRING + (ProductIDServer.instance()).getId();
+    id = PRODUCT_STRING + (ProductIdServer.instance()).getId();
   }
 
   public String getName() {
