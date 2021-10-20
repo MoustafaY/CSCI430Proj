@@ -18,6 +18,19 @@ public class ShoppingCart implements Serializable {
   public Iterator<ShoppingCartItem> getShoppingCartProducts() {
     return cart.iterator();
   }
+
+  public double getTotalPrice() {
+    double totalPrice = 0;
+    Iterator<ShoppingCartItem> cartIterator = cart.iterator();
+
+    while (cartIterator.hasNext()){
+      ShoppingCartItem item = cartIterator.next();
+      totalPrice += (item.getProduct().getSalePrice() * item.getQuantity());
+    }
+    
+    return totalPrice;
+  }
+  
   public String toString() {
     return cart.toString();
   }
