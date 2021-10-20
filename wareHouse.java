@@ -100,7 +100,7 @@ public class wareHouse implements Serializable{
 	}
 	
 	public Product editProductSaleP(String iD, double saleP) {
-		boolean result = prodList.editProductSaleP(iD, saleP);
+		boolean result = prodList.editProductSale(iD, saleP);
 		if(result == true) {
 			Product tempEdit1 = prodList.getProduct(iD);
 			return tempEdit1;
@@ -111,7 +111,7 @@ public class wareHouse implements Serializable{
 	}
 	
 	public Product editProductSuppP(String iD, double suppP) {
-		boolean result = prodList.editProductSuppP(iD, suppP);
+		boolean result = prodList.editProductSupply(iD, suppP);
 		if(result == true) {
 			Product tempEdit1 = prodList.getProduct(iD);
 			return tempEdit1;
@@ -120,6 +120,7 @@ public class wareHouse implements Serializable{
 			return null;
 		}
 	}
+	
 	//public Product assignProdToSupplier
 	public void printProduct() {
 		System.out.println(prodList);
