@@ -71,9 +71,8 @@ public class userInterface{
 	//Supplier Class
 	public void addSupplier() {
 		String name = getToken("Enter supplier name: ");
-		supplier tempAdd;
-		tempAdd = warehouse.addSupplier(name);
-		System.out.println("Supplier added: " + tempAdd.getName() + " " + tempAdd.getId());
+		supplier temp = warehouse.addSupplier(name);
+		System.out.println("Supplier added: " + temp.getName() + " " + temp.getId());
 	}
 	
 	public void editSupplier() {
