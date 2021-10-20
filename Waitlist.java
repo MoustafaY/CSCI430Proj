@@ -14,11 +14,12 @@ public class Waitlist implements Serializable {
     this.quantity = q;
   }
 
+  /*
   public Waitlist(client c, int q) {
      this.client = c;
      this.quantity = q;
     }
-
+*/
   public Product getProduct(){
     return product;
   }
