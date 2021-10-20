@@ -131,6 +131,10 @@ public class wareHouse implements Serializable{
 		return s.getProducts();
 	}
 	
+	public Iterator<Product> getProductsByClient (Client c)
+	{
+		return c.getClients();
+	}
 	
 	
 }
