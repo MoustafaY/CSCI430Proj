@@ -1,45 +1,24 @@
-//This is just an idea of an implementation for transaction for you Ujjwal you can change this if you want to do something else 
-//Let me know in discord if you need help
-
 import java.util.*;
+import java.io.*;
 
 public class TransactionList implements Serializable {
+  private static final long serialVersionUID = 1L;
+  private List<Transaction> transactionList;
 
-	private static final long serialVersionUID = 1L;
-	private static TransactionList trList;
+  public TransactionList() {
+    transactionList = new LinkedList<Transaction>();
+  }
 
-	public static TransactionList instance() {
-		if (trList == null)
-			return (trList = new TransactionList());
-		else
-			return trList;
-	}
-
-	/// returns a list of transactions that have the specified client ID
-	public LinkedList<Transaction> filterListByClient(int cID) {
-		LinkedList<Transaction> cLL = new LinkedList<Transaction>();
-		Iterator<Thing> iter = trList.getList();
-		Transaction t;
-		while (iter.hasNext()) {
-			t = (Transaction) iter.next();
-			if (t.getClientID() == cID) {
-				cLL.add(t);
-			}
-		}
-		return cLL;
-	}
-
-	/// returns the transaction if found
-	/// returns null if not found
-	public Transaction searchTransaction(int tID) {
-		Iterator<Thing> iter = trList.getList();
-		Transaction t;
-		while (iter.hasNext()) {
-			t = (Transaction) iter.next();
-			if (t.getID() == tID) {
-				return t;
-			}
-		}
-		return null;
-	}
+  public boolean insertTransaction(Transaction transaction) {
+    transactionList.add(transaction);
+    return true;
+  }
+  
+  public Iterator<Transaction> getTransactions() {
+    return transactionList.iterator();
+  }
+  
+  public String toString() {
+    return transactionList.toString();
+  }
 }
