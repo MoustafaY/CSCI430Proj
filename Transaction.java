@@ -1,35 +1,34 @@
-//This is just an idea for you Ujjwal if you dont want to implment the class like this you can change this 
+import java.io.*;
+import java.text.*;
+import java.util.*;
 
-public class Transaction implments Serializable {
-	private static final long serialVersionUID = 1L;
-	private int transactionID;
-	private int clientID;
-	private double balance;
+public class Transaction implements Serializable {
+  private static final long serialVersionUID = 1L;
+  private static final DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm aa");
+  private String date;
+  private String description;
+  private double amount;
 
-	public Transaction(int tID, int cID, double bal) {
-		this.transactionID = tID;
-		this.clientID = cID;
-		this.balance = bal;
-	}
 
-	public double getBalance() {
-		return balance;
-	}
+  public Transaction(String desc, double amt) {
+    date = dateFormat.format(new Date());
+    description = desc;
+    amount = amt;
+  }
 
-	public int getClientID() {
-		return clientID;
-	}
+  public String getDate() {
+    return date;
+  }
 
-	public void setBalance(double amount) {
-		this.balance = amount;
-	}
+  public String getDescription() {
+    return description;
+  }
 
-	public int getID() {
-		return transactionID;
-	}
+  public double getAmount() {
+    return amount;
+  }
 
-	public Transaction instance() {
-		return this;
-	}
+  public String toString() {
+      return "date: " + date + ", description: " + description + ", Transaction Amount: $" + amount;
+  }
 }
-
