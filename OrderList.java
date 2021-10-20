@@ -1,42 +1,55 @@
 import java.util.*;
 import java.io.*;
-
 public class OrderList implements Serializable {
-
-    private static final long serialVersionUID = 1L;
-    private LinkedList orders = new LinkedList();
-    private static OrderList orderList;
-
-    private OrderList() {
+  private static final long serialVersionUID = 1L;
+  private List<Order> orders = new LinkedList<Order>();
+  private static OrderList orderList;
+  private OrderList() {
+  }
+  public static OrderList instance() {
+    if (orderList == null) {
+      return (orderList = new OrderList());
+    } else {
+      return orderList;
     }
+  }
 
-    public static OrderList instance() {
+  public boolean insertOrder(Order order) {
+    orders.add(order);
+    return true;
+  }
+
+  public Iterator<Order> getOrders(){
+     return orders.iterator();
+  }
+  
+  private void writeObject(java.io.ObjectOutputStream output) {
+    try {
+      output.defaultWriteObject();
+      output.writeObject(orderList);
+    } catch(IOException ioe) {
+      ioe.printStackTrace();
+    }
+  }
+  private void readObject(java.io.ObjectInputStream input) {
+    try {
+      if (orderList != null) {
+        return;
+      } else {
+        input.defaultReadObject();
         if (orderList == null) {
-            return (orderList = new OrderList());
+          orderList = (OrderList) input.readObject();
         } else {
-            return orderList;
+          input.readObject();
         }
+      }
+    } catch(IOException ioe) {
+      ioe.printStackTrace();
+    } catch(ClassNotFoundException cnfe) {
+      cnfe.printStackTrace();
     }
-
-    public LinkedList getList() {
-        return orders;
-    }
-
-    public boolean addOrder(Order o) {
-        return orders.add(o);
-    }
-
-    public Order find(String clientId) {
-        for (Iterator iterator = orders.iterator(); iterator.hasNext();) {
-            Order order = (Order) iterator.next();
-            if (clientId.equals(order.getClientId())) {
-                return order;
-            }
-        }
-        return null;
-    }
-
-    public Iterator getOrderList() {
-        return orders.iterator();
-    }
+  }
+  public String toString() {
+    return orders.toString();
+  }
 }
