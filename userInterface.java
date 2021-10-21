@@ -194,25 +194,25 @@ public class userInterface{
 
         try {
             String clientId = getToken("Enter client ID");
-            if (warehouse.findClient(clientId)) {
-                Order o = warehouse.findOrder(clientId);
+            if (warehouse.getClientById(clientId) == null) {
+                Order o = warehouse.getOrderById(clientId);
                 if (o != null) {
-                    o.printOrder();
+                    o.toString();
                 }
             } else {
                 System.out.println("Client is not found.");
             }
         } catch (IOException ex) {
-            Logger.getLogger(UserInterface.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(userInterface.class.getName()).log(Level.SEVERE, null, ex);
         }
 
   }
 //waitllisted orders by product
 	public void showWaitlist() {
-        try {
+         try {
             System.out.println("Show wait list for product.");
             String pId = getToken("Enter product ID");
-            if (warehouse.findProduct(pId) != null) {
+            if (warehouse.getProductById(pId) != null) {
                 Iterator wholeWaitList = warehouse.getWaitList(pId);
                 while (wholeWaitList.hasNext()) {
                     Waitlist waitList = (Waitlist) (wholeWaitList.next());
