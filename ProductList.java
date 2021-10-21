@@ -123,6 +123,19 @@ public class ProductList implements Serializable {
     return products.toString();
   }
   
+  public void printProd() {
+		String temp;
+		  for(int i=0; i<products.size(); i++) {
+				temp = ((Product) products.get(i)).getSupplier();
+				if(temp != null) {
+					System.out.println(((Product) products.get(i)).toStringSupp());
+				}
+				else {
+					System.out.println(((Product) products.get(i)).toString());
+			}
+	  }
+	}
+  
   //Query assignments
   public void queryAssign() {
 	  String temp;
