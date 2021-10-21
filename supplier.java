@@ -6,11 +6,13 @@ public class supplier implements Serializable{
 	private String id;
 	private static final String SUPPLIER_STRING = "S";
 	private String product;
+	private double supplierPrice;
 	
 	public supplier(String name) {
 		this.name = name;
 		id = SUPPLIER_STRING + (supplierIdServer.instance()).getId();
 		this.product = null;
+		this.supplierPrice = 0;
 	}
 	
 	public String getName() {
@@ -25,12 +27,17 @@ public class supplier implements Serializable{
 		return product;
 	}
 	
+	public double getPrice() {
+		return supplierPrice;
+	}
+	
 	public void setName(String newName) {
 		name = newName;
 	}
 	
-	public void setProduct(String prod) {
+	public void setProduct(String prod, double price) {
 		product = prod;
+		supplierPrice = price;
 	}
 	
 	public String toString() {
@@ -39,7 +46,7 @@ public class supplier implements Serializable{
 	}
 	
 	public String toStringProd() {
-		return "Supplier name " + name + " Id " + id + " Product " + product; 
+		return "Supplier name " + name + " Id " + id + " Product " + product + " Supplier Price " + supplierPrice; 
 	  }
 	
 }
