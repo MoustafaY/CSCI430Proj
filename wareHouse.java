@@ -143,7 +143,7 @@ public class wareHouse implements Serializable{
 	}
 	
 	public boolean checkSuppId(String supp) {
-		if(getSupplierById(supp) == null) {
+		if(suppList.getSupplier(supp) == null) {
 			return false;
 		}
 		return true;
@@ -352,7 +352,7 @@ public class wareHouse implements Serializable{
 	}
 
 	public Boolean addProductToInventory(String id, int quantity) {
-	    Product p = getProductById(id);
+	    Product p = prodList.getProduct(id);
 	    if(p == null) {
 	        return false;
 	    }
