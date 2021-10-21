@@ -20,6 +20,7 @@ public class userInterface{
 	private static final int SHOW_WAILIST = 13;
 	private static final int PLACE_ORDER = 14;
 	private static final int SHOW_INVOICE = 15;
+	private static final int ASSIGN_REL = 16;
 	
 
 	private static wareHouse warehouse = new wareHouse();
@@ -129,9 +130,8 @@ public class userInterface{
 		int quantity = Integer.parseInt(getToken("Enter quantity: "));
 		double salePrice = Integer.parseInt(getToken("Enter sale price: "));
 		double supplyPrice = Integer.parseInt(getToken("Enter supply price: "));
-		Product tempAdd = new Product(name, quantity, salePrice, supplyPrice);
-		tempAdd = warehouse.addProduct(tempAdd);
-		System.out.println("Product added: " + tempAdd);
+		Product temp = warehouse.addProduct(name, quantity, salePrice, supplyPrice);
+		System.out.println("Product added: " + temp);
 	}
 	
 	public void editProductName() {
@@ -207,9 +207,10 @@ public class userInterface{
         }
 
   }
+	
 //waitllisted orders by product
 	public void showWaitlist() {
-         try {
+        try {
             System.out.println("Show wait list for product.");
             String pId = getToken("Enter product ID");
             if (warehouse.getProductById(pId) != null) {
@@ -227,6 +228,32 @@ public class userInterface{
             Logger.getLogger(UserInterface.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+	
+	//Assigning relationship between supplier and product
+	public void assign() {
+		String prod = getToken("Enter product ID: ");
+		String supp = getToken("Enter supplier ID: ");
+		
+		boolean resultProd = false;
+		while(!resultProd) {
+			resultProd = warehouse.checkProdId(prod);
+			if(!resultProd) {
+				System.out.println("Invalid product ID");
+				prod = getToken("Enter product ID: ");
+			}
+		}
+		
+		boolean resultSupp = false;
+		while(!resultSupp) {
+			resultSupp = warehouse.checkSuppId(supp);
+			if(!resultSupp) {
+				System.out.println("Invalid Supplier ID");
+				supp = getToken("Enter supplier ID: ");
+			}
+		}
+		
+		warehouse.assignProdToSupp(prod, supp);
+	}
 	
 	public void process() {
 		int command;
@@ -260,8 +287,10 @@ public class userInterface{
 									break;
 			case ACCEPT_ORDERS: acceptOrders();
 									  break;
-			case SHOW_INVOICE; showInvoice();
-								break;	
+			case SHOW_INVOICE: showInvoice();
+								break;
+			case ASSIGN_REL:	assign();
+								break;
 								 
 			}
 		}
