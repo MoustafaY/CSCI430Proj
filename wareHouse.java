@@ -73,7 +73,7 @@ public class wareHouse implements Serializable{
 	}
 	
 	public client getClient(String iD) {
-		return  getClientById(iD);
+		return  cliList.getClient(iD);
 	}
 	
 	public void printClient() {
@@ -81,7 +81,7 @@ public class wareHouse implements Serializable{
 	}
 	
 	public boolean checkClientId(String client) {
-		if(getClientById(client) == null) {
+		if(cliList.getClient(client) == null) {
 			return false;
 		}
 		return true;
@@ -362,7 +362,7 @@ public class wareHouse implements Serializable{
 	
 	//print waitlist
 		public Waitlist getWaitList(String clientId) {
-			client temp = getClientById(clientId);
+			client temp = cliList.getClient(clientId);
 			return temp.getWaitList();
 		}
 
