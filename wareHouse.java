@@ -177,3 +177,30 @@ public Boolean displayCart(String clientId) {
         cli.setShoppingCart(new ShoppingCart());;
         return true;
     }
+//place order and empty client's shopping cart
+public Boolean placeOrder(String clientId) {
+    client cli = this.getClient(clientId);
+    if ( cli == null ) {
+        return false;
+    }
+
+    Iterator<ShoppingCartItem> cartIterator = cli.getShoppingCart().getShoppingCartProducts();
+    while(cartIterator.hasNext()) {
+        ShoppingCartItem cartItem = cartIterator.next();
+        String productId = cartItem.getProduct().getId();
+        InventoryItem inventoryItem = getInventoryItemById(productId);
+        
+        if(inventoryItem != null) {
+            int quantityInStock = inventoryItem.getQuantity();
+            int cartQuantity = cartItem.getQuantity();
+            int newQuantityInStock = 0;
+            newQuantityInStock = quantityInStock - cartQuantity;
+            if(newQuantityInStock < 0) {
+                int waitItemQuantity = newQuantityInStock * -1;
+                waitlistItem(clientId, productId, waitItemQuantity);
+                inventoryItem.setQuantity(0);
+            } else {
+                inventoryItem.setQuantity(newQuantityInStock);
+            }
+        }
+    }
