@@ -17,7 +17,7 @@ public class userInterface{
 	private static final int EDIT_PRODUCT_SALE = 10;
 	private static final int EDIT_PRODUCT_SUPPLY = 11;
 	private static final int PRINT_PRODUCT = 12;
-	private static final int SHOW_WAILIST = 13;
+	private static final int SHOW_WAITLIST = 13;
 	private static final int PLACE_ORDER = 14;
 	private static final int SHOW_INVOICE = 15;
 	private static final int ASSIGN_REL = 16;
@@ -210,24 +210,22 @@ public class userInterface{
 	
 //waitllisted orders by product
 	public void showWaitlist() {
-        try {
-            System.out.println("Show wait list for product.");
-            String pId = getToken("Enter product ID");
-            if (warehouse.getProductById(pId) != null) {
-                Iterator wholeWaitList = warehouse.getWaitList(pId);
-                while (wholeWaitList.hasNext()) {
-                    Waitlist waitList = (Waitlist) (wholeWaitList.next());
-                    System.out.println(waitList.toString());
-                }
-                
-            } else {
-                System.out.println("Product not found.");
-                
-            }
-        } catch (IOException ex) {
-            Logger.getLogger(UserInterface.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+		String clientId = getToken("Enter client ID: ");
+		
+		boolean resultClient = false;
+		while(!resultClient) {
+			resultClient = warehouse.checkClientId(clientId);
+			if(!resultClient) {
+				System.out.println("Invalid client ID");
+				clientId = getToken("Enter client ID: ");
+			}
+		}
+		
+		Waitlist temp = warehouse.getWaitList(clientId);
+		
+		System.out.println("Wait list of client: " + clientId);
+		System.out.println(temp);
+	}
 	
 	//Assigning relationship between supplier and product
 	public void assign() {
