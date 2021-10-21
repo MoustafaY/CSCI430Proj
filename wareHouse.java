@@ -197,7 +197,7 @@ public Boolean placeOrder(String clientId) {
             newQuantityInStock = quantityInStock - cartQuantity;
             if(newQuantityInStock < 0) {
                 int waitItemQuantity = newQuantityInStock * -1;
-                waitlistItem(clientId, productId, waitItemQuantity);
+                waitlistItem(productId, waitItemQuantity);
                 inventoryItem.setQuantity(0);
             } else {
                 inventoryItem.setQuantity(newQuantityInStock);
