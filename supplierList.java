@@ -21,6 +21,16 @@ public class supplierList implements Serializable{
 		return temp;
 	}
 	
+	public void assignProd(String supp ,String prod) {
+		String temp;
+		for(int i=0; i<suppliers.size(); i++) {
+			temp = ((supplier) suppliers.get(i)).getId();
+			if(temp.equals(supp)) {
+				((supplier) suppliers.get(i)).setProduct(prod);
+			}
+		}
+	}
+	
 	public boolean editSupplier(String na, String iD) {
 		String temp;
 		for(int i=0; i<suppliers.size(); i++) {
@@ -35,14 +45,13 @@ public class supplierList implements Serializable{
 	
 	public supplier getSupplier(String iD) {
 		String temp;
-		supplier dummy = new supplier("Dummy");
 		for(int i=0; i<suppliers.size(); i++) {
 			temp = ((supplier) suppliers.get(i)).getId();
 			if(temp.equals(iD)) {
 				return (supplier) suppliers.get(i);
 			}
 		}
-		return dummy;
+		return null;
 	}
 	
 	public Iterator getSuppliers() {
