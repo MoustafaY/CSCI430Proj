@@ -1,5 +1,6 @@
 import java.util.*;
 import java.io.*;
+import warehouse.Supplier;
 public class Product implements Serializable {
   private static final long serialVersionUID = 1L;
   private String name;
@@ -55,42 +56,22 @@ public double getSupplyPrice() {
   public boolean equals(String id) {
         return this.id.equals(id);
   }
-  
-public boolean link(supplier supp) {
-	supplier S = new supplier(supp);
-	return productSupplier.add(S) ? true: false;
-}
-
-public boolean unlink(supplier supp) {
-	return productSupplier.remove(supp) ? true: false;
-}
-	
-public Iterator<Supplier> getSuppliers() {
+  	
+public Iterator<supplier> getSuppliers() {
 	return productSupplier.iterator();
 }
-public Supplier searcSuppList(Supplier supplier)
-{
-      int i = 0;
-      for (i=0; i <= productSupplier.size()-1; i++)
-      {
-        if ((productSupplier.get(i).getSupplier()) == supplier)
-        {
-          return productSupplier.get(i);
-        }
-      }
-      return null;
-}
 
-public Iterator<Waitlist> getWaitlistedClients() {
-	return waitlistedClients.iterator();
-}
-	
-public List<Supplier> getList() {
-	return productSupplier;
-}
-	
-public boolean addClientToWaitlist(Waitlist w) {
-	return waitlistedClients.add(w);
+public Iterator<Waitlist> getWaitlistedClients()
+    {
+      return waitlistedClients.iterator();
+    }
+    public boolean addToWaitlist(Waitlist w)
+    {
+        return waitlistedClients.add(w);
+    }
+    public boolean addToProductSuppliers(supplier s) {
+		return productSupplier.add(s);
+
 }
 	
   public String toString() {
