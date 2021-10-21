@@ -46,7 +46,7 @@ public class wareHouse implements Serializable{
 	}
 	
 	public void printSupplier() {
-		System.out.println(suppList);
+		suppList.printSupp();
 	}
 	
 	public boolean checkProdId(String prod) {
@@ -139,7 +139,7 @@ public class wareHouse implements Serializable{
 	}
 	
 	public void printProduct() {
-		System.out.println(prodList);
+		prodList.printProd();
 	}
 	
 	public boolean checkSuppId(String supp) {
