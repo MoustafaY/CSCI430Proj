@@ -209,12 +209,10 @@ public class userInterface{
 		String clientId = getToken("Enter client ID: ");
 		
 		boolean resultClient = false;
-		while(!resultClient) {
-			resultClient = warehouse.checkClientId(clientId);
-			if(!resultClient) {
-				System.out.println("Invalid client ID");
-				clientId = getToken("Enter client ID: ");
-			}
+		resultClient = warehouse.checkClientId(clientId);
+		if(!resultClient) {
+			System.out.println("Invalid client ID");
+			return;
 		}
 		
 		Waitlist temp = warehouse.getWaitList(clientId);
@@ -229,21 +227,19 @@ public class userInterface{
 		String supp = getToken("Enter supplier ID: ");
 		
 		boolean resultProd = false;
-		while(!resultProd) {
-			resultProd = warehouse.checkProdId(prod);
-			if(!resultProd) {
-				System.out.println("Invalid product ID");
-				prod = getToken("Enter product ID: ");
-			}
+		
+		resultProd = warehouse.checkProdId(prod);
+		if(!resultProd) {
+			System.out.println("Invalid product ID");
+			return;
 		}
 		
 		boolean resultSupp = false;
-		while(!resultSupp) {
-			resultSupp = warehouse.checkSuppId(supp);
-			if(!resultSupp) {
-				System.out.println("Invalid Supplier ID");
-				supp = getToken("Enter supplier ID: ");
-			}
+
+		resultSupp = warehouse.checkSuppId(supp);
+		if(!resultSupp) {
+			System.out.println("Invalid supplier ID");
+			return;
 		}
 		
 		warehouse.assignProdToSupp(prod, supp);
