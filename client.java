@@ -54,8 +54,8 @@ public class client implements Serializable{
 	        balance -= bal;
 	    }
 	
-	public void addWaitListItem(String clientId, Product prod, int quantity) {
-		  waitList.insertItem(clientId, prod, quantity);
+	public void addWaitListItem(Product prod, int quantity) {
+		  waitList.insertItem(prod, quantity);
 	  }
 
 	public String toString() {
