@@ -76,6 +76,13 @@ public class wareHouse implements Serializable{
 		System.out.println(cliList);
 	}
 	
+	public boolean checkClientId(String client) {
+		if(getClientById(client) == null) {
+			return false;
+		}
+		return true;
+	}
+	
 	//Product Class
 	
 	public Product addProduct(String name, int quantity, double salePrice, double supplyPrice) {
@@ -348,6 +355,11 @@ public class wareHouse implements Serializable{
 	    Inventory.instance().addToInventory(p, quantity);
 	    return true;
 	}
+	//print waitlist
+		public Waitlist getWaitList(String clientId) {
+			client temp = getClientById(clientId);
+			return temp.getWaitList();
+		}
 
 	}
 	
