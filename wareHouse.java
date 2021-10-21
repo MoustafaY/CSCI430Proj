@@ -365,6 +365,16 @@ public class wareHouse implements Serializable{
 			client temp = cliList.getClient(clientId);
 			return temp.getWaitList();
 		}
+		
+		
+	//Query assignments
+		public void prodListQuery() {
+			prodList.queryAssign();
+		}
+		
+		public void suppListQuery() {
+			suppList.queryAssign();
+		}
 
 	}
 	
