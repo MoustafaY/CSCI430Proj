@@ -21,12 +21,12 @@ public class supplierList implements Serializable{
 		return temp;
 	}
 	
-	public void assignProd(String supp ,String prod) {
+	public void assignProd(String supp ,String prod, double price) {
 		String temp;
 		for(int i=0; i<suppliers.size(); i++) {
 			temp = ((supplier) suppliers.get(i)).getId();
 			if(temp.equals(supp)) {
-				((supplier) suppliers.get(i)).setProduct(prod);
+				((supplier) suppliers.get(i)).setProduct(prod, price);
 			}
 		}
 	}
