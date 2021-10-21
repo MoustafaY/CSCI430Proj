@@ -14,14 +14,84 @@ public class ProductList implements Serializable {
     }
   }
 
-  public boolean insertProduct(Product product) {
-    products.add(product);
-    return true;
+  public Product insertProduct(String name, int quantity, double salePrice, double supplyPrice) {
+	Product temp = new Product(name, quantity, salePrice, supplyPrice);
+    products.add(temp);
+    return temp;
+  }
+  
+  public void assignSupp(String prod, String supp) {
+	  String temp;
+		for(int i=0; i<products.size(); i++) {
+			temp = ((Product) products.get(i)).getId();
+			if(temp.equals(prod)) {
+				((Product) products.get(i)).setSupplier(supp);
+			}
+		}
   }
 
-  public Iterator getProducts(){
-     return products.iterator();
+  public Product getProduct(String iD){
+	  String temp;
+	  for(int i=0; i<products.size(); i++) {
+		  temp = ((Product) products.get(i)).getId();
+		  if(temp.equals(iD)) {
+			  return (Product) products.get(i);
+		  }
+	  }
+     return null;
   }
+  
+  public boolean editProductName(String iD, String name) {
+		String temp;
+		for(int i=0; i<products.size(); i++) {
+			temp = ((Product) products.get(i)).getId();
+			if(temp.equals(iD)) {
+				((Product) products.get(i)).setName(name);
+				return true;
+			}
+		}
+		return false;
+	}
+  
+  public boolean editProductQuantity(String iD, int quantity) {
+		String temp;
+		for(int i=0; i<products.size(); i++) {
+			temp = ((Product) products.get(i)).getId();
+			if(temp.equals(iD)) {
+				((Product) products.get(i)).setQuantity(quantity);
+				return true;
+			}
+		}
+		return false;
+	}
+  
+  public boolean editProductSale(String iD, double sale) {
+		String temp;
+		for(int i=0; i<products.size(); i++) {
+			temp = ((Product) products.get(i)).getId();
+			if(temp.equals(iD)) {
+				((Product) products.get(i)).setSalePrice(sale);
+				return true;
+			}
+		}
+		return false;
+	}
+  
+  public boolean editProductSupply(String iD, double supply) {
+		String temp;
+		for(int i=0; i<products.size(); i++) {
+			temp = ((Product) products.get(i)).getId();
+			if(temp.equals(iD)) {
+				((Product) products.get(i)).setSupplyPrice(supply);
+				return true;
+			}
+		}
+		return false;
+	}
+  
+  public Iterator getProducts() {
+		return products.iterator();
+	}
   
   private void writeObject(java.io.ObjectOutputStream output) {
     try {
