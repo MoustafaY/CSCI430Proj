@@ -21,6 +21,8 @@ public class userInterface{
 	private static final int PLACE_ORDER = 14;
 	private static final int SHOW_INVOICE = 15;
 	private static final int ASSIGN_REL = 16;
+	private static final int PRODUCT_REL = 17;
+	private static final int SUPPLIER_REL = 18;
 	
 
 	private static wareHouse warehouse = new wareHouse();
@@ -247,6 +249,15 @@ public class userInterface{
 		
 	}
 	
+	public void prodListQuery() {
+		warehouse.prodListQuery();
+	}
+	
+	
+	public void suppListQuery() {
+		warehouse.suppListQuery();
+	}
+	
 	public void process() {
 		int command;
 		while((command = getCommand()) != EXIT) {
@@ -282,6 +293,10 @@ public class userInterface{
 			case SHOW_INVOICE: showInvoice();
 								break;
 			case ASSIGN_REL:	assign();
+								break;
+			case PRODUCT_REL: prodListQuery();
+								break;
+			case SUPPLIER_REL: suppListQuery();
 								break;
 								 
 			}
