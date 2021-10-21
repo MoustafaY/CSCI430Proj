@@ -5,10 +5,12 @@ public class supplier implements Serializable{
 	private String name;
 	private String id;
 	private static final String SUPPLIER_STRING = "S";
+	private String product;
 	
 	public supplier(String name) {
 		this.name = name;
 		id = SUPPLIER_STRING + (supplierIdServer.instance()).getId();
+		this.product = null;
 	}
 	
 	public String getName() {
@@ -19,8 +21,16 @@ public class supplier implements Serializable{
 		return id;
 	}
 	
+	public String getProduct() {
+		return product;
+	}
+	
 	public void setName(String newName) {
 		name = newName;
+	}
+	
+	public void setProduct(String prod) {
+		product = prod;
 	}
 	
 	public String toString() {
