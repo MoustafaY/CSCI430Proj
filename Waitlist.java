@@ -9,10 +9,9 @@ public class Waitlist implements Serializable {
   }
 
 
-  public boolean insertItem(String clientId, Product product, int quantity) {
+  public void insertItem(Product product, int quantity) {
     waitListItem item = new waitListItem(product, quantity);
     waitItem.add(item);
-    return true;
   }
   
   
