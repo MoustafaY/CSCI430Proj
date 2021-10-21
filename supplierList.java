@@ -89,4 +89,15 @@ public class supplierList implements Serializable{
 	public String toString() {
 		return suppliers.toString();
 	}
+	
+	//Query assignments
+	  public void queryAssign() {
+		  String temp;
+		  for(int i=0; i<suppliers.size(); i++) {
+				temp = ((supplier) suppliers.get(i)).getProduct();
+				if(temp != null) {
+					System.out.println(((supplier) suppliers.get(i)).toStringProd());
+				}
+			}
+	  }
 }
