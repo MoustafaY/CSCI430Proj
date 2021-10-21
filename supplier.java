@@ -38,4 +38,8 @@ public class supplier implements Serializable{
 		return string;
 	}
 	
+	public String toStringProd() {
+		return "Supplier name " + name + " Id " + id + " Product " + product; 
+	  }
+	
 }
