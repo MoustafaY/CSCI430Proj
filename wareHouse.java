@@ -62,14 +62,18 @@ public class wareHouse implements Serializable{
 		return temp;
 	}
 	
-	public boolean editClient(String name, String iD) {
-		boolean result = cliList.editClient(name, iD);
-		return result;
+	public client editClient(String name, String iD) {
+		client result = cliList.editClient(name, iD);
+		if(result == null) {
+			return null;
+		}
+		else {
+			return cliList.getClient(iD);
+		}
 	}
 	
 	public client getClient(String iD) {
-		client tempGet = getClientById(iD);
-		return tempGet;
+		return  getClientById(iD);
 	}
 	
 	public void printClient() {
@@ -355,6 +359,7 @@ public class wareHouse implements Serializable{
 	    Inventory.instance().addToInventory(p, quantity);
 	    return true;
 	}
+	
 	//print waitlist
 		public Waitlist getWaitList(String clientId) {
 			client temp = getClientById(clientId);
@@ -362,4 +367,6 @@ public class wareHouse implements Serializable{
 		}
 
 	}
+	
+	
 	
