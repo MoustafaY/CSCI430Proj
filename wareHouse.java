@@ -204,3 +204,32 @@ public Boolean placeOrder(String clientId) {
             }
         }
     }
+}
+//get item in inventory by id
+    public InventoryItem getInventoryItemById(String id) {
+        Iterator<InventoryItem> inventory = Inventory.instance().getInventory();
+
+        InventoryItem item = null;
+        while (inventory.hasNext() && item == null) {
+            InventoryItem tmp = inventory.next();
+            if ( tmp.equals(id)) {
+                item = tmp;
+            }
+        }
+
+        return item;
+    }
+//get invoice by id
+public Invoice getInvoiceById(String id) {
+Iterator<Invoice> invoices = InvoiceList.instance().getInvoices();
+
+Invoice i = null;
+while (invoices.hasNext() && i == null) {
+    Invoice tmp = invoices.next();
+    if ( tmp.equals(id)) {
+        i = tmp;
+    }
+}
+
+return i;
+}
