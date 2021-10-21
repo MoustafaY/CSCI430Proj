@@ -19,9 +19,9 @@ public class wareHouse implements Serializable{
 		if(warehouse == null) {
 			supplierIdServer.instance();//class id server here
 			clientIdServer.instance();
-			ProductIDServer.instance();
+			ProductIdServer.instance();
 			InvoiceIdServer.instance();
-                        orderIdServer.instance();
+                        OrderIdServer.instance();
 			return (warehouse = new wareHouse());
 		}else {
 			return warehouse;
