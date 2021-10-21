@@ -4,6 +4,9 @@ public class wareHouse implements Serializable{
 	private supplierList suppList;
 	private clientList cliList;
 	private ProductList prodList;
+	private Inventory inventory;
+        private InvoiceList invoiceList;
+        private OrderList orderList;
 	private static wareHouse warehouse;
 	
 	wareHouse() {
@@ -17,6 +20,8 @@ public class wareHouse implements Serializable{
 			supplierIdServer.instance();//class id server here
 			clientIdServer.instance();
 			ProductIDServer.instance();
+			InvoiceIdServer.instance();
+                        orderIdServer.instance();
 			return (warehouse = new wareHouse());
 		}else {
 			return warehouse;
@@ -133,8 +138,42 @@ public class wareHouse implements Serializable{
 	
 	public Iterator<Product> getProductsByClient (Client c)
 	{
+		
+		
 		return c.getClients();
 	}
 	
 	
 }
+
+//display a client's shopping cart
+public Boolean displayCart(String clientId) {
+    client cli = this.getClient(clientId);
+    if ( cli == null ) {
+        return false;
+    }
+    Iterator<ShoppingCartItem> cartIterator = cli.getShoppingCart().getShoppingCartProducts();
+    while (cartIterator.hasNext()){
+        System.out.println(cartIterator.next());
+     }
+    return true;
+}
+// add product to a client's shopping cart
+    public Boolean addToCart(String clientId, Product product, int quantity) {
+        client cli = this.getClient(clientId);
+        if ( cli == null ) {
+            return false;
+        }
+        cli.getShoppingCart().insertProductToCart(product, quantity);
+        return true;
+    }
+
+    // empty a client's shopping cart
+    public Boolean emptyCart(String clientId) {
+         client cli = this.getClient(clientId);
+        if ( cli == null ) {
+            return false;
+        }
+        cli.setShoppingCart(new ShoppingCart());;
+        return true;
+    }
