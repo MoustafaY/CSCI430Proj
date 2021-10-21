@@ -1,6 +1,6 @@
 import java.util.*;
 import java.io.*;
-import warehouse.Supplier;
+//import wareHouse.Supplier;
 public class Product implements Serializable {
   private static final long serialVersionUID = 1L;
   private String name;
@@ -8,7 +8,7 @@ public class Product implements Serializable {
   private int quantity;
   private double salePrice;
   private double supplyPrice;
-  private List<supplier> productSupplier = new LinkedList <supplier>();
+  private String supplier;
   private List<Waitlist> waitlistedClients = new LinkedList <Waitlist>();
   private static final String PRODUCT_STRING = "P";
 	
@@ -17,6 +17,7 @@ public class Product implements Serializable {
     this.quantity = quantity;
     this.salePrice = salePrice;
 	this.supplyPrice = supplyPrice;
+	this.supplier = null;
     id = PRODUCT_STRING + (ProductIdServer.instance()).getId();
   }
 
@@ -30,6 +31,14 @@ public class Product implements Serializable {
   
   public String getId() {
         return id;
+  }
+  
+  public String getSupplier() {
+	  return supplier;
+  }
+  
+  public void setSupplier(String supp) {
+	  supplier = supp;
   }
   
 public double getSalePrice() {
@@ -56,11 +65,8 @@ public double getSupplyPrice() {
   public boolean equals(String id) {
         return this.id.equals(id);
   }
-  	
-public Iterator<supplier> getSuppliers() {
-	return productSupplier.iterator();
-}
 
+  /*
 public Iterator<Waitlist> getWaitlistedClients()
     {
       return waitlistedClients.iterator();
@@ -72,7 +78,7 @@ public Iterator<Waitlist> getWaitlistedClients()
     public boolean addToProductSuppliers(supplier s) {
 		return productSupplier.add(s);
 
-}
+}*/
 	
   public String toString() {
         return "Product: " + name + " ID: " + id + " Qty: " + quantity + " salePrice " + salePrice + " supplyPrice " + supplyPrice;
