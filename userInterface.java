@@ -108,14 +108,13 @@ public class userInterface{
 		String name = getToken("Enter new client name: ");
 		String iD = getToken("Enter new client ID: ");
 		
-		boolean result;
+		client result;
 		result = warehouse.editClient(name, iD);
-		if(result == false) {
+		if(result == null) {
 			System.out.println("Invalid client ID");
 		}
 		else {
-			client tempEdit = warehouse.getClient(iD);
-			System.out.println("Client name changed: " + tempEdit);
+			System.out.println("Client name changed: " + result.getName());
 		}
 		
 	}
@@ -192,7 +191,6 @@ public class userInterface{
 	
 	public void showInvoice() {
 
-        try {
             String clientId = getToken("Enter client ID");
             if (warehouse.getClientById(clientId) == null) {
                 Order o = warehouse.getOrderById(clientId);
@@ -202,13 +200,11 @@ public class userInterface{
             } else {
                 System.out.println("Client is not found.");
             }
-        } catch (IOException ex) {
-            Logger.getLogger(userInterface.class.getName()).log(Level.SEVERE, null, ex);
-        }
 
   }
 	
 //waitllisted orders by product
+	
 	public void showWaitlist() {
 		String clientId = getToken("Enter client ID: ");
 		
@@ -251,6 +247,8 @@ public class userInterface{
 		}
 		
 		warehouse.assignProdToSupp(prod, supp);
+		
+		
 	}
 	
 	public void process() {
@@ -283,8 +281,8 @@ public class userInterface{
 								break;
 			case SHOW_WAITLIST: showWaitlist();
 									break;
-			case ACCEPT_ORDERS: acceptOrders();
-									  break;
+			//case ACCEPT_ORDERS: acceptOrders();
+									  //break;
 			case SHOW_INVOICE: showInvoice();
 								break;
 			case ASSIGN_REL:	assign();
