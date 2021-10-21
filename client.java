@@ -5,14 +5,16 @@ public class client implements Serializable{
 	private String name;
 	private String id;
 	private double balance;
-        private ShoppingCart shoppingCart;
-        private TransactionList transactionList;
+    private ShoppingCart shoppingCart;
+    private TransactionList transactionList;
+    private Waitlist waitList;
 
 	private static final String CLIENT_STRING = "M";
 	
 	public client(String name) {
 		this.name = name;
 		id = CLIENT_STRING + (clientIdServer.instance()).getId();
+		this.waitList = new Waitlist();
 	}
 	
 	public String getName() {
