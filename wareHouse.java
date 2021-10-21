@@ -206,16 +206,20 @@ public Boolean placeOrder(String clientId) {
     }
 }
 
- // empty a client's shopping cart
-    public Boolean emptyCart(String clientId) {
-         client cli = this.getClient(clientId);
-        if ( cli == null ) {
-            return false;
-        }
-        cli.setShoppingCart(new ShoppingCart());;
-        return true;
-    }
+ //get client by id
+    public client getClientById(String id) {
+        Iterator<client> clients = clientList.instance().getClients();
 
+        client p = null;
+        while (clients.hasNext() && p == null) {
+            client tmp = clients.next();
+            if ( tmp.equals(id) ) {
+                p = tmp;
+            }
+        }
+
+        return p;
+    }
  //get product by id
     public Product getProductById(String id) {
         Iterator<Product> products = ProductList.instance().getProducts();
