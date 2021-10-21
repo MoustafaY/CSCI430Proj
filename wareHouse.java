@@ -205,6 +205,36 @@ public Boolean placeOrder(String clientId) {
         }
     }
 }
+
+//get client by id
+    public Client getClientById(String id) {
+        Iterator<Client> clients = ClientList.instance().getClients();
+
+        Client p = null;
+        while (clients.hasNext() && p == null) {
+            Client tmp = clients.next();
+            if ( tmp.equals(id) ) {
+                p = tmp;
+            }
+        }
+
+        return p;
+    }
+ //get product by id
+    public Product getProductById(String id) {
+        Iterator<Product> products = ProductList.instance().getProducts();
+
+        Product p = null;
+        while (products.hasNext() && p == null) {
+            Product tmp = products.next();
+            if ( tmp.equals(id)) {
+                p = tmp;
+            }
+        }
+
+        return p;
+    }
+
 //get item in inventory by id
     public InventoryItem getInventoryItemById(String id) {
         Iterator<InventoryItem> inventory = Inventory.instance().getInventory();
@@ -233,3 +263,57 @@ while (invoices.hasNext() && i == null) {
 
 return i;
 }
+// add product to inventory
+public Boolean addToInventory(String productId, int quantity) {
+Product product = this.getProductById(productId);
+if ( product == null ) {
+    return false;
+}
+InventoryItem item = getInventoryItemById(productId);
+if(item == null) {
+    Inventory.instance().addToInventory(product, quantity);
+} else {
+    int currentQuantity = item.getQuantity();
+    int newQuantity = currentQuantity += quantity;
+    item.setQuantity(newQuantity);
+}
+return true;
+}
+
+
+//make payment
+public Boolean makePayment(String clientId, double amount) {
+    client cli = this.getClientById(clientId);
+    if ( cli == null ) {
+        return false;
+    }
+    cli.addBalance(amount);
+    Transaction transaction = new Transaction("Payment Made", amount);
+    cli.getTransactionList().insertTransaction(transaction);
+    return true;
+}
+
+// get a client's transactions
+public Iterator<Transaction> getTransactions(String clientId) {
+    client cli = this.getClientById(clientId);
+    if ( cli == null ) {
+        return null;
+    }
+    return cli.getTransactionList().getTransactions();
+}
+
+public Iterator<InventoryItem> getInventory() {
+    return Inventory.instance().getInventory();
+}
+
+public Boolean addProductToInventory(String id, int quantity) {
+    Product p = getProductById(id);
+    if(p == null) {
+        return false;
+    }
+    Inventory.instance().addToInventory(p, quantity);
+    return true;
+}
+
+}
+	
