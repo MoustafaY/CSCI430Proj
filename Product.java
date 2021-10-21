@@ -66,21 +66,13 @@ public double getSupplyPrice() {
         return this.id.equals(id);
   }
 
-  /*
-public Iterator<Waitlist> getWaitlistedClients()
-    {
-      return waitlistedClients.iterator();
-    }
-    public boolean addToWaitlist(Waitlist w)
-    {
-        return waitlistedClients.add(w);
-    }
-    public boolean addToProductSuppliers(supplier s) {
-		return productSupplier.add(s);
-
-}*/
+ 
 	
   public String toString() {
         return "Product: " + name + " ID: " + id + " Qty: " + quantity + " salePrice " + salePrice + " supplyPrice " + supplyPrice;
     }
+  
+  public String toStringSupp() {
+	return "Product: " + name + " ID: " + id + " Qty: " + quantity + " salePrice " + salePrice + " supplyPrice " + supplyPrice + " Supplier " + supplier; 
+  }
 }
