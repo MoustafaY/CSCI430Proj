@@ -56,8 +56,7 @@ public class wareHouse implements Serializable{
 	
 	//Client class
 	public client addClient(String name) {
-		client tempAdd = new client(name);
-		cliList.insertClient(tempAdd);
+		cliList.insertClient(name);
 		return tempAdd;
 	}
 	
@@ -197,7 +196,6 @@ public Boolean placeOrder(String clientId) {
             newQuantityInStock = quantityInStock - cartQuantity;
             if(newQuantityInStock < 0) {
                 int waitItemQuantity = newQuantityInStock * -1;
-                waitlistItem(productId, waitItemQuantity);
 		Product temp = prodList.getProduct(productId);
 	        cli.addWaitListItem(temp, waitItemQuantity);
                 inventoryItem.setQuantity(0);
@@ -237,6 +235,21 @@ public Boolean placeOrder(String clientId) {
         return p;
     }
 
+//get Order by id
+	    public Order getOrderById(String id) {
+	        Iterator<Order> orders = OrderList.instance().getOrders();
+
+	        Order o = null;
+	        while (orders.hasNext() && o == null) {
+	            Order tmp = orders.next();
+	            if ( tmp.equals(id)) {
+	                o = tmp;
+	            }
+	        }
+
+	        return o;
+	    }
+
 //get item in inventory by id
     public InventoryItem getInventoryItemById(String id) {
         Iterator<InventoryItem> inventory = Inventory.instance().getInventory();
@@ -265,6 +278,8 @@ while (invoices.hasNext() && i == null) {
 
 return i;
 }
+
+
 // add product to inventory
 public Boolean addToInventory(String productId, int quantity) {
 Product product = this.getProductById(productId);
