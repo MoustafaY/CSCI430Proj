@@ -21,33 +21,33 @@ public class clientList implements Serializable{
 		return temp;
 	}
 	
-	public boolean editClient(String na, String iD) {
+	public client editClient(String na, String iD) {
 		String temp;
 		for(int i=0; i<clients.size(); i++) {
 			temp = ((client) clients.get(i)).getId();
 			if(temp.equals(iD)) {
 				((client) clients.get(i)).setName(na);
-				return true;
-			}
-		}
-		return false;
-	}
-	
-	public client getClient(String iD) {
-		String temp;
-		client dummy = new client("Dummy");
-		for(int i=0; i<clients.size(); i++) {
-			temp = ((client) clients.get(i)).getId();
-			if(temp.equals(iD)) {
 				return (client) clients.get(i);
 			}
 		}
-		return dummy;
+		return null;
 	}
+	
 	
 	public Iterator getClients() {
 		return clients.iterator();
 	}
+	
+	public client getClient(String iD){
+		  String temp;
+		  for(int i=0; i<clients.size(); i++) {
+			  temp = ((client) clients.get(i)).getId();
+			  if(temp.equals(iD)) {
+				  return (client) clients.get(i);
+			  }
+		  }
+	     return null;
+	  }
 	
 	private void writeObject(java.io.ObjectOutputStream output) {
 		try {
