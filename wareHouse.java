@@ -154,7 +154,8 @@ public class wareHouse implements Serializable{
 		
 		public void assignProdToSupp(String prod, String supp) {
 			prodList.assignSupp(prod, supp);
-			suppList.assignProd(supp, prod);
+			Product temp = prodList.getProduct(prod);
+			suppList.assignProd(supp, prod, temp.getSupplyPrice());
 		}
 		
 
