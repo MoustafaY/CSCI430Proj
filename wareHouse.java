@@ -147,7 +147,7 @@ public class wareHouse implements Serializable{
 
 //display a client's shopping cart
 public Boolean displayCart(String clientId) {
-    client cli = this.getClient(clientId);
+    client cli = getClientById(clientId);
     if ( cli == null ) {
         return false;
     }
@@ -159,7 +159,7 @@ public Boolean displayCart(String clientId) {
 }
 // add product to a client's shopping cart
     public Boolean addToCart(String clientId, Product product, int quantity) {
-        client cli = this.getClient(clientId);
+        client cli = getClientById(clientId);
         if ( cli == null ) {
             return false;
         }
@@ -169,7 +169,7 @@ public Boolean displayCart(String clientId) {
 
     // empty a client's shopping cart
     public Boolean emptyCart(String clientId) {
-         client cli = this.getClient(clientId);
+         client cli = getClientById(clientId);
         if ( cli == null ) {
             return false;
         }
@@ -178,7 +178,7 @@ public Boolean displayCart(String clientId) {
     }
 //place order and empty client's shopping cart
 public Boolean placeOrder(String clientId) {
-    client cli = this.getClient(clientId);
+    client cli = getClientById(clientId);
     if ( cli == null ) {
         return false;
     }
