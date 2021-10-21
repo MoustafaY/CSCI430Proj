@@ -57,6 +57,10 @@ public class client implements Serializable{
 	public void addWaitListItem(Product prod, int quantity) {
 		  waitList.insertItem(prod, quantity);
 	  }
+	
+	public Waitlist getWaitList() {
+		  return waitList;
+	  }
 
 	public String toString() {
 		String string = "Client name " + name + " Id " + id + " Client balance: " + balance;
