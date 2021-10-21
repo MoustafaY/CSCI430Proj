@@ -69,7 +69,7 @@ public double getSupplyPrice() {
  
 	
   public String toString() {
-        return "Product: " + name + " ID: " + id + " Qty: " + quantity + " salePrice " + salePrice + " supplyPrice " + supplyPrice;
+        return "Product: " + name + " ID: " + id + " Quantity: " + quantity + " Sales Price " + salePrice + " Supplier Price " + supplyPrice;
     }
   
   public String toStringSupp() {
