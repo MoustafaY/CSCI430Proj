@@ -4,9 +4,6 @@ public class wareHouse implements Serializable{
 	private supplierList suppList;
 	private clientList cliList;
 	private ProductList prodList;
-	private Inventory inventory;
-        private InvoiceList invoiceList;
-        private OrderList orderList;
 	private static wareHouse warehouse;
 	
 	wareHouse() {
@@ -20,8 +17,6 @@ public class wareHouse implements Serializable{
 			supplierIdServer.instance();//class id server here
 			clientIdServer.instance();
 			ProductIdServer.instance();
-			InvoiceIdServer.instance();
-                        OrderIdServer.instance();
 			return (warehouse = new wareHouse());
 		}else {
 			return warehouse;
@@ -54,10 +49,17 @@ public class wareHouse implements Serializable{
 		System.out.println(suppList);
 	}
 	
+	public boolean checkProdId(String prod) {
+		if(getProductById(prod) == null) {
+			return false;
+		}
+		return true;
+	}
+	
 	//Client class
 	public client addClient(String name) {
-		cliList.insertClient(name);
-		return tempAdd;
+		client temp = cliList.insertClient(name);
+		return temp;
 	}
 	
 	public boolean editClient(String name, String iD) {
@@ -66,7 +68,7 @@ public class wareHouse implements Serializable{
 	}
 	
 	public client getClient(String iD) {
-		client tempGet = cliList.getClient(iD);
+		client tempGet = getClientById(iD);
 		return tempGet;
 	}
 	
@@ -76,9 +78,9 @@ public class wareHouse implements Serializable{
 	
 	//Product Class
 	
-	public Product addProduct(Product tempAdd) {
-		prodList.insertProduct(tempAdd);
-		return tempAdd;
+	public Product addProduct(String name, int quantity, double salePrice, double supplyPrice) {
+		Product temp = prodList.insertProduct(name, quantity, salePrice, supplyPrice);
+		return temp;
 	}
 	
 	public Product editProductName(String iD, String name) {
@@ -125,117 +127,134 @@ public class wareHouse implements Serializable{
 		}
 	}
 	
-	//public Product assignProdToSupplier
 	public void printProduct() {
 		System.out.println(prodList);
 	}
 	
-	public Iterator<Product> getProductsBySupplier (Supplier s)
-	{
-		return s.getProducts();
+	public boolean checkSuppId(String supp) {
+		if(getSupplierById(supp) == null) {
+			return false;
+		}
+		return true;
 	}
 	
-	public Iterator<Product> getProductsByClient (Client c)
-	{
+	//public Product assignProdToSupplier
 		
 		
-		return c.getClients();
+		public void assignProdToSupp(String prod, String supp) {
+			prodList.assignSupp(prod, supp);
+			suppList.assignProd(supp, prod);
+		}
+		
+
+	//display a client's shopping cart
+	public Boolean displayCart(String clientId) {
+	    client cli = getClientById(clientId);
+	    if ( cli == null ) {
+	        return false;
+	    }
+	    Iterator<ShoppingCartItem> cartIterator = cli.getShoppingCart().getShoppingCartProducts();
+	    while (cartIterator.hasNext()){
+	        System.out.println(cartIterator.next());
+	     }
+	    return true;
 	}
-	
-	
-}
+	// add product to a client's shopping cart
+	    public Boolean addToCart(String clientId, Product product, int quantity) {
+	        client cli = getClientById(clientId);
+	        if ( cli == null ) {
+	            return false;
+	        }
+	        cli.getShoppingCart().insertProductToCart(product, quantity);
+	        return true;
+	    }
 
-//display a client's shopping cart
-public Boolean displayCart(String clientId) {
-    client cli = getClientById(clientId);
-    if ( cli == null ) {
-        return false;
-    }
-    Iterator<ShoppingCartItem> cartIterator = cli.getShoppingCart().getShoppingCartProducts();
-    while (cartIterator.hasNext()){
-        System.out.println(cartIterator.next());
-     }
-    return true;
-}
-// add product to a client's shopping cart
-    public Boolean addToCart(String clientId, Product product, int quantity) {
-        client cli = getClientById(clientId);
-        if ( cli == null ) {
-            return false;
-        }
-        cli.getShoppingCart().insertProductToCart(product, quantity);
-        return true;
-    }
+	    // empty a client's shopping cart
+	    public Boolean emptyCart(String clientId) {
+	         client cli = getClientById(clientId);
+	        if ( cli == null ) {
+	            return false;
+	        }
+	        cli.setShoppingCart(new ShoppingCart());;
+	        return true;
+	    }
+	//place order and empty client's shopping cart
+	public Boolean placeOrder(String clientId) {
+	    client cli = getClientById(clientId);
+	    if ( cli == null ) {
+	        return false;
+	    }
 
-    // empty a client's shopping cart
-    public Boolean emptyCart(String clientId) {
-         client cli = getClientById(clientId);
-        if ( cli == null ) {
-            return false;
-        }
-        cli.setShoppingCart(new ShoppingCart());;
-        return true;
-    }
-//place order and empty client's shopping cart
-public Boolean placeOrder(String clientId) {
-    client cli = getClientById(clientId);
-    if ( cli == null ) {
-        return false;
-    }
+	    Iterator<ShoppingCartItem> cartIterator = cli.getShoppingCart().getShoppingCartProducts();
+	    while(cartIterator.hasNext()) {
+	        ShoppingCartItem cartItem = cartIterator.next();
+	        String productId = cartItem.getProduct().getId();
+	        InventoryItem inventoryItem = getInventoryItemById(productId);
+	        
+	        if(inventoryItem != null) {
+	            int quantityInStock = inventoryItem.getQuantity();
+	            int cartQuantity = cartItem.getQuantity();
+	            int newQuantityInStock = 0;
+	            newQuantityInStock = quantityInStock - cartQuantity;
+	            if(newQuantityInStock < 0) {
+	                int waitItemQuantity = newQuantityInStock * -1;
+	                Product temp = prodList.getProduct(productId);
+	                cli.addWaitListItem(temp, waitItemQuantity);
+	                inventoryItem.setQuantity(0);
+	            } else {
+	                inventoryItem.setQuantity(newQuantityInStock);
+	            }
+	        }
+	    }
+	    
+	    return true;
+	}
 
-    Iterator<ShoppingCartItem> cartIterator = cli.getShoppingCart().getShoppingCartProducts();
-    while(cartIterator.hasNext()) {
-        ShoppingCartItem cartItem = cartIterator.next();
-        String productId = cartItem.getProduct().getId();
-        InventoryItem inventoryItem = getInventoryItemById(productId);
-        
-        if(inventoryItem != null) {
-            int quantityInStock = inventoryItem.getQuantity();
-            int cartQuantity = cartItem.getQuantity();
-            int newQuantityInStock = 0;
-            newQuantityInStock = quantityInStock - cartQuantity;
-            if(newQuantityInStock < 0) {
-                int waitItemQuantity = newQuantityInStock * -1;
-		Product temp = prodList.getProduct(productId);
-	        cli.addWaitListItem(temp, waitItemQuantity);
-                inventoryItem.setQuantity(0);
-            } else {
-                inventoryItem.setQuantity(newQuantityInStock);
-            }
-        }
-    }
-}
+	 //get client by id
+	    public client getClientById(String id) {
+	        Iterator<client> clients = clientList.instance().getClients();
 
- //get client by id
-    public client getClientById(String id) {
-        Iterator<client> clients = clientList.instance().getClients();
+	        client p = null;
+	        while (clients.hasNext() && p == null) {
+	            client tmp = clients.next();
+	            if ( tmp.equals(id) ) {
+	                p = tmp;
+	            }
+	        }
 
-        client p = null;
-        while (clients.hasNext() && p == null) {
-            client tmp = clients.next();
-            if ( tmp.equals(id) ) {
-                p = tmp;
-            }
-        }
+	        return p;
+	    }
+	 //get product by id
+	    public Product getProductById(String id) {
+	        Iterator<Product> products = ProductList.instance().getProducts();
 
-        return p;
-    }
- //get product by id
-    public Product getProductById(String id) {
-        Iterator<Product> products = ProductList.instance().getProducts();
+	        Product p = null;
+	        while (products.hasNext() && p == null) {
+	            Product tmp = products.next();
+	            if ( tmp.equals(id)) {
+	                p = tmp;
+	            }
+	        }
 
-        Product p = null;
-        while (products.hasNext() && p == null) {
-            Product tmp = products.next();
-            if ( tmp.equals(id)) {
-                p = tmp;
-            }
-        }
+	        return p;
+	    }
+	    
+	    //get supplier by id
+	    public supplier getSupplierById(String id) {
+	        Iterator<supplier> suppliers = supplierList.instance().getSuppliers();
 
-        return p;
-    }
+	        supplier s = null;
+	        while (suppliers.hasNext() && s == null) {
+	            supplier tmp = suppliers.next();
+	            if ( tmp.equals(id)) {
+	                s = tmp;
+	            }
+	        }
 
-//get Order by id
+	        return s;
+	    }
+	    
+	    //get Order by id
 	    public Order getOrderById(String id) {
 	        Iterator<Order> orders = OrderList.instance().getOrders();
 
@@ -250,87 +269,85 @@ public Boolean placeOrder(String clientId) {
 	        return o;
 	    }
 
-//get item in inventory by id
-    public InventoryItem getInventoryItemById(String id) {
-        Iterator<InventoryItem> inventory = Inventory.instance().getInventory();
+	//get item in inventory by id
+	    public InventoryItem getInventoryItemById(String id) {
+	        Iterator<InventoryItem> inventory = Inventory.instance().getInventory();
 
-        InventoryItem item = null;
-        while (inventory.hasNext() && item == null) {
-            InventoryItem tmp = inventory.next();
-            if ( tmp.equals(id)) {
-                item = tmp;
-            }
-        }
+	        InventoryItem item = null;
+	        while (inventory.hasNext() && item == null) {
+	            InventoryItem tmp = inventory.next();
+	            if ( tmp.equals(id)) {
+	                item = tmp;
+	            }
+	        }
 
-        return item;
-    }
-//get invoice by id
-public Invoice getInvoiceById(String id) {
-Iterator<Invoice> invoices = InvoiceList.instance().getInvoices();
+	        return item;
+	    }
+	//get invoice by id
+	public Invoice getInvoiceById(String id) {
+	Iterator<Invoice> invoices = InvoiceList.instance().getInvoices();
 
-Invoice i = null;
-while (invoices.hasNext() && i == null) {
-    Invoice tmp = invoices.next();
-    if ( tmp.equals(id)) {
-        i = tmp;
-    }
-}
+	Invoice i = null;
+	while (invoices.hasNext() && i == null) {
+	    Invoice tmp = invoices.next();
+	    if ( tmp.equals(id)) {
+	        i = tmp;
+	    }
+	}
 
-return i;
-}
-
-
-// add product to inventory
-public Boolean addToInventory(String productId, int quantity) {
-Product product = this.getProductById(productId);
-if ( product == null ) {
-    return false;
-}
-InventoryItem item = getInventoryItemById(productId);
-if(item == null) {
-    Inventory.instance().addToInventory(product, quantity);
-} else {
-    int currentQuantity = item.getQuantity();
-    int newQuantity = currentQuantity += quantity;
-    item.setQuantity(newQuantity);
-}
-return true;
-}
+	return i;
+	}
+	// add product to inventory
+	public Boolean addToInventory(String productId, int quantity) {
+	Product product = this.getProductById(productId);
+	if ( product == null ) {
+	    return false;
+	}
+	InventoryItem item = getInventoryItemById(productId);
+	if(item == null) {
+	    Inventory.instance().addToInventory(product, quantity);
+	} else {
+	    int currentQuantity = item.getQuantity();
+	    int newQuantity = currentQuantity += quantity;
+	    item.setQuantity(newQuantity);
+	}
+	return true;
+	}
 
 
-//make payment
-public Boolean makePayment(String clientId, double amount) {
-    client cli = this.getClientById(clientId);
-    if ( cli == null ) {
-        return false;
-    }
-    cli.addBalance(amount);
-    Transaction transaction = new Transaction("Payment Made", amount);
-    cli.getTransactionList().insertTransaction(transaction);
-    return true;
-}
+	//make payment
+	public Boolean makePayment(String clientId, double amount) {
+	    client cli = this.getClientById(clientId);
+	    if ( cli == null ) {
+	        return false;
+	    }
+	    cli.addBalance(amount);
+	    Transaction transaction = new Transaction("Payment Made", amount);
+	    cli.getTransactionList().insertTransaction(transaction);
+	    return true;
+	}
 
-// get a client's transactions
-public Iterator<Transaction> getTransactions(String clientId) {
-    client cli = this.getClientById(clientId);
-    if ( cli == null ) {
-        return null;
-    }
-    return cli.getTransactionList().getTransactions();
-}
+	// get a client's transactions
+	public Iterator<Transaction> getTransactions(String clientId) {
+	    client cli = this.getClientById(clientId);
+	    if ( cli == null ) {
+	        return null;
+	    }
+	    return cli.getTransactionList().getTransactions();
+	}
 
-public Iterator<InventoryItem> getInventory() {
-    return Inventory.instance().getInventory();
-}
+	public Iterator<InventoryItem> getInventory() {
+	    return Inventory.instance().getInventory();
+	}
 
-public Boolean addProductToInventory(String id, int quantity) {
-    Product p = getProductById(id);
-    if(p == null) {
-        return false;
-    }
-    Inventory.instance().addToInventory(p, quantity);
-    return true;
-}
+	public Boolean addProductToInventory(String id, int quantity) {
+	    Product p = getProductById(id);
+	    if(p == null) {
+	        return false;
+	    }
+	    Inventory.instance().addToInventory(p, quantity);
+	    return true;
+	}
 
-}
+	}
 	
