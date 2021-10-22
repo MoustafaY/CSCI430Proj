@@ -15,9 +15,9 @@ public class userInterface{
 	private static final int SHOW_WAITLIST = 8;
 	private static final int PLACE_ORDER = 9;
 	private static final int DISPLAY_CART=10;
-    private static final int ADD_TO_CART=11;
-    private static final int REMOVE_ITEM=12;
-    private static final int CHANGE_QUANTITY = 13;
+    	private static final int ADD_TO_CART=11;
+    	private static final int REMOVE_ITEM=12;
+    	private static final int CHANGE_QUANTITY = 13;
 	private static final int MAKE_PAYMENT = 14;
 	private static final int ASSIGN_REL = 15;
 	private static final int PRODUCT_REL = 16;
