@@ -68,21 +68,30 @@ public class clientList implements Serializable{
 	}
 	
 	public int acceptShipment(Product prod, int Quantity) {
-		waitListItem waitItem;
+		Waitlist listWait;
+		waitListItem itemWait;
+		double amtDue;
 		for(int i=0; i<clients.size(); i++) {
-			  waitItem = ((client) clients.get(i)).getWaitList().getWaitItem(prod.getId());
-			  if(waitItem != null) {
-				  int oldQuantity = waitItem.getQuantity();
+			  listWait = ((client) clients.get(i)).getWaitList();
+			  itemWait = listWait.getWaitItem(prod.getId());
+			  if(itemWait != null) {
+				  amtDue = ((client) clients.get(i)).getBalance();
+				  int oldQuantity = itemWait.getQuantity();
 				  if(Quantity == 0) {
 					  return 0;
 				  }
 				  if(Quantity > oldQuantity) {
 					  Quantity -= oldQuantity;
-					  waitItem.updateQuantity(0);
+					  amtDue += oldQuantity * itemWait.getProduct().getSalePrice();
+					  ((client) clients.get(i)).setBalance(amtDue);
+					  listWait.remItem(prod.getId());
 				  }
 				  else {
 					  oldQuantity -= Quantity;
-					  waitItem.updateQuantity(oldQuantity);
+					  amtDue += Quantity * itemWait.getProduct().getSalePrice();
+					  ((client) clients.get(i)).setBalance(amtDue);
+					  itemWait.updateQuantity(oldQuantity);
+					  return 0;
 				  }
 			  }
 		  }

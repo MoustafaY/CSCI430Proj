@@ -1,5 +1,6 @@
 import java.util.*;
 import java.io.*;
+import java.util.LinkedList;
 public class Waitlist implements Serializable {
   private static final long serialVersionUID = 1L;
   private List waitItem = new LinkedList();
@@ -10,13 +11,27 @@ public class Waitlist implements Serializable {
     waitItem.add(item);
   }
   
-
-  public waitListItem getWaitItem(String id) {
+  public void remItem(String prodId) {
 	  String temp;
 	  for(int i=0; i<waitItem.size(); i++) {
 		  temp = ((waitListItem) waitItem.get(i)).getProductId();
-		  if(temp.equals(id)) {
-			  return (waitListItem) waitItem.get(i);
+		  if(temp.equals(prodId)) {
+			  waitItem.remove(i);
+			  return;
+		  }
+	  }
+  }
+  
+  
+  public waitListItem getWaitItem(String id) {
+	  waitListItem temp;
+	  if(waitItem.size() == 0) {
+		  return null;
+	  }
+	  for(int i=0; i<waitItem.size(); i++) {
+		  temp = (waitListItem) waitItem.get(i);
+		  if(temp.getProductId().equals(id)) {
+			  return temp;
 		  }
 	  }
 	  return null;

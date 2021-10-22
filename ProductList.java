@@ -46,7 +46,7 @@ public class ProductList implements Serializable {
 	  for(int i=0; i<products.size(); i++) {
 		  temp = (Product) products.get(i);
 		  if(temp.getId().equals(prod.getId())) {
-			  int newQuantity = temp.getQuantity() + prod.getQuantity();
+			  int newQuantity = temp.getQuantity() + quantity;
 			  temp.setQuantity(newQuantity);
 			  return;
 		  }
