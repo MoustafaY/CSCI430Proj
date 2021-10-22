@@ -28,7 +28,13 @@ public class userInterface{
 	private static wareHouse warehouse = new wareHouse();
 		
 	private userInterface() {
+		if (yesOrNo("Look for saved data and use it?")) {
+
+	      retrieve();
+	    } else {
+		
 		warehouse = wareHouse.instance();
+	}
 	}
 	public static userInterface instance() {
 		if(UI == null) {
@@ -37,6 +43,40 @@ public class userInterface{
 			return UI;
 		}
 	}
+	private void retrieve() {
+		    try {
+		      wareHouse tempWarehouse = warehouse.retrieve();
+		      if (tempWarehouse != null) {
+		        System.out.println(" The warehouse has been successfully retrieved from the file WarehouseData \n" );
+		        warehouse = tempWarehouse;
+		      } else {
+		        System.out.println("File doesnt exist; creating new warehouse" );
+		        warehouse = wareHouse.instance();
+		      }
+		    } catch(Exception cnfe) {
+		      cnfe.printStackTrace();
+		    }
+		  }
+	
+	private boolean yesOrNo(String prompt) {
+	    String more = getToken(prompt + " (Y|y)[es] or anything else for no");
+	    if (more.charAt(0) != 'y' && more.charAt(0) != 'Y') {
+	      return false;
+	    }
+	    return true;
+	  }
+
+	  public int getInt(String prompt) {
+	    do {
+	      try {
+	        String item = getToken(prompt);
+	        Integer num = Integer.parseInt(item);
+	        return num.intValue();
+	      } catch (NumberFormatException nfe) {
+	        System.out.println("Please input a number ");
+	      }
+	    } while (true);
+	  }
 	
 	public String getToken(String prompt) {
 		do {
@@ -246,6 +286,100 @@ public class userInterface{
 		
 		warehouse.assignProdToSupp(prod, supp);
 		
+		
+		public void addToCart() {
+	    client cli;
+	    Product product;
+
+	    String clientId = getToken("Enter client id to add to their shopping cart");
+	    cli = warehouse.getClientById(clientId);
+	    if (cli != null) {
+	      System.out.println("Client found:");
+	      System.out.println(cli);
+	      do {
+	        String productId = getToken("Enter product id");
+	        product = warehouse.getProductById(productId);
+	        if(product != null) {
+	          System.out.println("Product found:");
+	          System.out.println(product);
+	          int productQuantity = getInt("Enter enter quantity");
+	          warehouse.addToCart(clientId, product, productQuantity);
+	        } else {
+	          System.out.println("Could not find that product id");
+	        }
+	        if (!yesOrNo("Add another product to the shopping cart?")) {
+	          break;
+	        }
+	      } while (true);
+	    } else {
+	      System.out.println("Could not find that client id");
+	    }
+	}
+	public void displayCart() {
+	    client cli;
+
+	    String clientId = getToken("Enter client id to view to their shopping cart");
+	    cli = warehouse.getClientById(clientId);
+	    if (cli != null) {
+	      System.out.println("Client found:");
+	      System.out.println(cli);
+	      System.out.println("Shopping Cart:");
+	      warehouse.displayCart(clientId);
+	    } else {
+	      System.out.println("Could not find that client id");
+	    }
+	  }
+
+	  public void emptyCart() {
+	    client cli;
+
+	    String clientId = getToken("Enter client id to empty to their shopping cart");
+	    cli = warehouse.getClientById(clientId);
+	    if (cli != null) {
+	      System.out.println("Client found:");
+	      System.out.println(cli);
+	      if(!yesOrNo("Are you sure you wish to empty the shopping cart?")) {
+	        warehouse.emptyCart(clientId);
+	        System.out.println("Shopping Cart has been emptied");
+	      } else {
+	        System.out.println("Canceled, shopping cart was not emptied");
+	      }
+	    } else {
+	      System.out.println("Could not find that client id");
+	    }
+	  }
+
+	  public void placeOrder() {
+	    client cli;
+
+	    String clientId = getToken("Enter client id to place an order");
+	    cli = warehouse.getClientById(clientId);
+	    if (cli != null) {
+	      System.out.println("Client found:");
+	      System.out.println(cli);
+	      
+	      //ensure the cart is not empty
+	      Iterator<ShoppingCartItem> cartIterator = cli.getShoppingCart().getShoppingCartProducts();
+	      if (cartIterator.hasNext()) {
+	        System.out.println("Shopping Cart Total: $" + cli.getShoppingCart().getTotalPrice());
+	        if(yesOrNo("Are you sure you wish to place an order?")) {
+	          if(warehouse.placeOrder(clientId)) {
+	            System.out.println("Order placed, total price charged to client's balance,");
+	            System.out.println("invoice generated, and shopping cart has been emptied.");
+	          } else {
+	            System.out.println("Unable to place order");
+	          }
+	          } else {
+	            System.out.println("Canceled, order was not placed");
+	          }
+	        } else {
+	          System.out.println("Shopping cart is empty, unable to place order");
+	        }
+	    } else {
+	      System.out.println("Could not find that client id");
+	    }
+	  }
+	
 		
 	}
 	
