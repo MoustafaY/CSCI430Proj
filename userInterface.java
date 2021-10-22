@@ -376,6 +376,34 @@ public class userInterface{
 		warehouse.suppListQuery();
 	}
 	
+	public void processPayment() {
+	    client cli;
+
+	    String clientId = getToken("Enter client id to make a payment");
+	    cli = warehouse.getClientById(clientId);
+	    if (cli != null) {      
+	      Double paymentAmount = getDouble("Enter payment amount");
+	      if(warehouse.makePayment(clientId, paymentAmount)) {
+	        System.out.println("Payment Successful, new balance: " + cli.getBalance());
+	      }
+	    } else {
+	      System.out.println("Could not find that client id");
+	    }
+	  }
+
+	 public void showBalance() {
+		    client result;
+		    String id = getToken("Enter client id to see balance");
+
+		    result = warehouse.getClientById(id);
+		    if (result != null) {
+		      System.out.println("Current Balance: $" + result.getBalance());
+		    } else {
+		      System.out.println("Could not find that client id");
+		    }
+		  }
+	
+	
 	public void process() {
 		int command;
 		while((command = getCommand()) != EXIT) {
