@@ -31,13 +31,9 @@ public class userInterface{
 	private static wareHouse warehouse = new wareHouse();
 		
 	private userInterface() {
-		if (yesOrNo("Look for saved data and use it?")) {
-
-	      retrieve();
-	    } else {
+		
 		
 		warehouse = wareHouse.instance();
-	}
 	}
 	public static userInterface instance() {
 		if(UI == null) {
@@ -46,20 +42,6 @@ public class userInterface{
 			return UI;
 		}
 	}
-	private void retrieve() {
-		    try {
-		      wareHouse tempWarehouse = warehouse.retrieve();
-		      if (tempWarehouse != null) {
-		        System.out.println(" The warehouse has been successfully retrieved from the file WarehouseData \n" );
-		        warehouse = tempWarehouse;
-		      } else {
-		        System.out.println("File doesnt exist; creating new warehouse" );
-		        warehouse = wareHouse.instance();
-		      }
-		    } catch(Exception cnfe) {
-		      cnfe.printStackTrace();
-		    }
-		  }
 	
 	private boolean yesOrNo(String prompt) {
 	    String more = getToken(prompt + " (Y|y)[es] or anything else for no");
@@ -287,7 +269,7 @@ public class userInterface{
 			return;
 		}
 		
-		warehouse.assignProdToSupp(prod, supp);
+		warehouse.assignProdToSupp(prod, supp);}
 		
 		
 		public void addToCart() {
@@ -383,8 +365,7 @@ public class userInterface{
 	    }
 	  }
 	
-		
-	}
+	
 	
 	public void prodListQuery() {
 		warehouse.prodListQuery();
