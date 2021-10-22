@@ -11,21 +11,6 @@ public class wareHouse implements Serializable{
 		cliList = clientList.instance();
 		prodList = ProductList.instance();
 	}
-	public static wareHouse retrieve() {
-        try {
-          FileInputStream file = new FileInputStream("wareHouseData");
-          ObjectInputStream input = new ObjectInputStream(file);
-          input.readObject();
-          input.close();
-          return warehouse;
-        } catch(IOException ioe) {
-          ioe.printStackTrace();
-          return null;
-        } catch(ClassNotFoundException cnfe) {
-          cnfe.printStackTrace();
-          return null;
-        }
-      }
 	
 	public static wareHouse instance() {
 		if(warehouse == null) {
