@@ -1,8 +1,9 @@
 import java.util.*;
 import java.io.*;
+import java.util.LinkedList;
 public class ShoppingCart implements Serializable {
   private static final long serialVersionUID = 1L;
-  private List<ShoppingCartItem> cart;
+  List<ShoppingCartItem> cart;
 
   public ShoppingCart() {
     cart = new LinkedList<ShoppingCartItem>();
@@ -17,6 +18,18 @@ public class ShoppingCart implements Serializable {
   
   public Iterator<ShoppingCartItem> getShoppingCartProducts() {
     return cart.iterator();
+  }
+  
+  public void removeItem(String productId) {
+	  String temp;
+	  for(int i=0; i<cart.size(); i++) {
+		  temp = ((ShoppingCartItem) cart.get(i)).getProductId();
+		  if(temp.equals(productId)) {
+			  cart.remove(i);
+			  return;
+		  }
+	  }
+     System.out.println("Invalid product ID");
   }
 
   public double getTotalPrice() {
@@ -33,5 +46,23 @@ public class ShoppingCart implements Serializable {
   
   public String toString() {
     return cart.toString();
+  }
+  
+  public void changeQuantity(String productId, int quantity) {
+	  String temp;
+	  for(int i=0; i<cart.size(); i++) {
+		  temp = ((ShoppingCartItem) cart.get(i)).getProductId();
+		  if(temp.equals(productId)) {
+			  ((ShoppingCartItem) cart.get(i)).setQuantity(quantity);
+			  return;
+		  }
+	  }
+     System.out.println("Invalid product ID");
+  }
+  
+  public void printCart() {
+	  for(int i=0; i<cart.size(); i++) {
+		  System.out.println((ShoppingCartItem) cart.get(i));
+	  }
   }
 }

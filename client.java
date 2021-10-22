@@ -15,6 +15,9 @@ public class client implements Serializable{
 		this.name = name;
 		id = CLIENT_STRING + (clientIdServer.instance()).getId();
 		this.waitList = new Waitlist();
+		this.shoppingCart = new ShoppingCart();
+		this.transactionList = new TransactionList();
+		this.balance = 0;
 	}
 	
 	public String getName() {
@@ -32,9 +35,14 @@ public class client implements Serializable{
         return shoppingCart;
     }
 
-    public TransactionList getTransactionList() {
-        return transactionList;
+    public void printTransactionList() {
+        transactionList.getTransactions();
     }
+    
+   public TransactionList getTransactionList() {
+	   return transactionList;
+   }
+   
 	public void setName(String newName) {
 		name = newName;
 	}
@@ -46,19 +54,11 @@ public class client implements Serializable{
 	        balance = newBalance;
 	    }
 
-	    public void addBalance(double bal) {
-	        balance += bal;
-	    }
-
-	    public void subtractBalance(double bal) {
-	        balance -= bal;
-	    }
-	
-	public void addWaitListItem(Product prod, int quantity) {
+	  public void addWaitListItem(Product prod, int quantity) {
 		  waitList.insertItem(prod, quantity);
 	  }
-	
-	public Waitlist getWaitList() {
+	  
+	  public Waitlist getWaitList() {
 		  return waitList;
 	  }
 

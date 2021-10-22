@@ -8,7 +8,7 @@ public class Product implements Serializable {
   private int quantity;
   private double salePrice;
   private double supplyPrice;
-  private String supplier;
+  private supplier supplier;
   private List<Waitlist> waitlistedClients = new LinkedList <Waitlist>();
   private static final String PRODUCT_STRING = "P";
 	
@@ -33,11 +33,11 @@ public class Product implements Serializable {
         return id;
   }
   
-  public String getSupplier() {
+  public supplier getSupplier() {
 	  return supplier;
   }
   
-  public void setSupplier(String supp) {
+  public void setSupplier(supplier supp) {
 	  supplier = supp;
   }
   
@@ -73,6 +73,6 @@ public double getSupplyPrice() {
     }
   
   public String toStringSupp() {
-	return "Product: " + name + " ID: " + id + " Quantity: " + quantity + " Sales Price " + salePrice + " Supplier Price " + supplyPrice + " Supplier " + supplier; 
+	return "Product: " + name + " ID: " + id + " Quantity: " + quantity + " Sales Price " + salePrice + " Supplier Price " + supplyPrice + " Supplier " + supplier.getName(); 
   }
 }

@@ -13,6 +13,10 @@ public class ShoppingCartItem implements Serializable{
     public Product getProduct() {
         return product;
     }
+    
+    public String getProductId() {
+    	return product.getId();
+    }
 
     public int getQuantity() {
         return quantity;
@@ -27,6 +31,6 @@ public class ShoppingCartItem implements Serializable{
     }
 
     public String toString() {
-        return "Product in shopping cart: " + product.toString() + ", Quantity in shopping cart: " + quantity;
+        return "Product in shopping cart: " + product.getName() + " Product ID, " + product.getId() + ", Quantity in shopping cart: " + quantity;
     }
 }

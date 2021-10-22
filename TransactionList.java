@@ -9,13 +9,16 @@ public class TransactionList implements Serializable {
     transactionList = new LinkedList<Transaction>();
   }
 
-  public boolean insertTransaction(Transaction transaction) {
+  public boolean insertTransaction(client cli, double amt) {
+	Transaction transaction = new Transaction(cli, amt);
     transactionList.add(transaction);
     return true;
   }
   
-  public Iterator<Transaction> getTransactions() {
-    return transactionList.iterator();
+  public void getTransactions() {
+	  for(int i=0; i<transactionList.size(); i++) {
+			System.out.println(((Transaction) transactionList.get(i)).toString());
+		}
   }
   
   public String toString() {

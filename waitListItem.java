@@ -6,6 +6,7 @@ public class waitListItem implements Serializable {
   private static final long serialVersionUID = 1L;
   private Product product;
   private int quantity;
+  
 
   public waitListItem(Product p, int q){
     this.product  = p;
@@ -14,6 +15,10 @@ public class waitListItem implements Serializable {
   
   public Product getProduct(){
     return product;
+  }
+  
+  public String getProductId() {
+	  return product.getId();
   }
 
   public int getQuantity(){

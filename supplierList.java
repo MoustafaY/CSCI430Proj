@@ -21,15 +21,16 @@ public class supplierList implements Serializable{
 		return temp;
 	}
 	
-	public void assignProd(String supp ,String prod, double price) {
+	public void assignProd(supplier supp , Product prod, double price) {
 		String temp;
 		for(int i=0; i<suppliers.size(); i++) {
 			temp = ((supplier) suppliers.get(i)).getId();
-			if(temp.equals(supp)) {
+			if(temp.equals(supp.getId())) {
 				((supplier) suppliers.get(i)).setProduct(prod, price);
 			}
 		}
 	}
+	
 	
 	public boolean editSupplier(String na, String iD) {
 		String temp;
@@ -91,21 +92,25 @@ public class supplierList implements Serializable{
 	}
 	
 	public void printSupp() {
-		String temp;
+		Product prod;
+		supplier supp;
 		  for(int i=0; i<suppliers.size(); i++) {
-				temp = ((supplier) suppliers.get(i)).getProduct();
-				if(temp != null) {
+				supp = (supplier) suppliers.get(i);
+				prod = supp.getProduct();
+				if(prod == null)
+				{
+					System.out.println(((supplier) suppliers.get(i)).toString());
+				}
+				else
+				{
 					System.out.println(((supplier) suppliers.get(i)).toStringProd());
 				}
-				else {
-					System.out.println(((supplier) suppliers.get(i)).toString());
-			}
 	  }
 	}
 	
 	//Query assignments
 	  public void queryAssign() {
-		  String temp;
+		  Product temp;
 		  for(int i=0; i<suppliers.size(); i++) {
 				temp = ((supplier) suppliers.get(i)).getProduct();
 				if(temp != null) {

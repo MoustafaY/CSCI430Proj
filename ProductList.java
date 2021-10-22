@@ -20,11 +20,11 @@ public class ProductList implements Serializable {
     return temp;
   }
   
-  public void assignSupp(String prod, String supp) {
+  public void assignSupp(Product prod, supplier supp) {
 	  String temp;
 		for(int i=0; i<products.size(); i++) {
 			temp = ((Product) products.get(i)).getId();
-			if(temp.equals(prod)) {
+			if(temp.equals(prod.getId())) {
 				((Product) products.get(i)).setSupplier(supp);
 			}
 		}
@@ -39,6 +39,18 @@ public class ProductList implements Serializable {
 		  }
 	  }
      return null;
+  }
+  
+  public void acceptShipment(Product prod, int quantity) {
+	  Product temp;
+	  for(int i=0; i<products.size(); i++) {
+		  temp = (Product) products.get(i);
+		  if(temp.getId().equals(prod.getId())) {
+			  int newQuantity = temp.getQuantity() + prod.getQuantity();
+			  temp.setQuantity(newQuantity);
+			  return;
+		  }
+	  }
   }
   
   public boolean editProductName(String iD, String name) {
@@ -125,20 +137,25 @@ public class ProductList implements Serializable {
   
   public void printProd() {
 		String temp;
+		Product prod;
+		supplier supp;
 		  for(int i=0; i<products.size(); i++) {
-				temp = ((Product) products.get(i)).getSupplier();
-				if(temp != null) {
+				prod = (Product) products.get(i);
+				supp = prod.getSupplier();
+				if(supp == null)
+				{
+					System.out.println(((Product) products.get(i)).toString());
+				}
+				else
+				{
 					System.out.println(((Product) products.get(i)).toStringSupp());
 				}
-				else {
-					System.out.println(((Product) products.get(i)).toString());
-			}
 	  }
 	}
   
   //Query assignments
   public void queryAssign() {
-	  String temp;
+	  supplier temp;
 	  for(int i=0; i<products.size(); i++) {
 			temp = ((Product) products.get(i)).getSupplier();
 			if(temp != null) {

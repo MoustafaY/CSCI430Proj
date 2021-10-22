@@ -5,7 +5,7 @@ public class supplier implements Serializable{
 	private String name;
 	private String id;
 	private static final String SUPPLIER_STRING = "S";
-	private String product;
+	private Product product;
 	private double supplierPrice;
 	
 	public supplier(String name) {
@@ -23,7 +23,7 @@ public class supplier implements Serializable{
 		return id;
 	}
 	
-	public String getProduct() {
+	public Product getProduct() {
 		return product;
 	}
 	
@@ -35,7 +35,7 @@ public class supplier implements Serializable{
 		name = newName;
 	}
 	
-	public void setProduct(String prod, double price) {
+	public void setProduct(Product prod, double price) {
 		product = prod;
 		supplierPrice = price;
 	}
@@ -46,7 +46,7 @@ public class supplier implements Serializable{
 	}
 	
 	public String toStringProd() {
-		return "Supplier name " + name + " Id " + id + " Product " + product + " Supplier Price " + supplierPrice; 
+		return "Supplier name " + name + " Id " + id + " Product " + product.getName() + " Supplier Price " + supplierPrice; 
 	  }
 	
 }
