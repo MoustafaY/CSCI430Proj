@@ -19,10 +19,13 @@ public class userInterface{
 	private static final int PRINT_PRODUCT = 12;
 	private static final int SHOW_WAITLIST = 13;
 	private static final int PLACE_ORDER = 14;
-	private static final int SHOW_INVOICE = 15;
-	private static final int ASSIGN_REL = 16;
-	private static final int PRODUCT_REL = 17;
-	private static final int SUPPLIER_REL = 18;
+	private static final int DISPLAY_CART=15;
+        private static final int ADD_TO_CART=16;
+        private static final int EMPTY_CART=17;
+	private static final int SHOW_INVOICE = 18;
+	private static final int ASSIGN_REL = 19;
+	private static final int PRODUCT_REL = 20;
+	private static final int SUPPLIER_REL = 21;
 	
 
 	private static wareHouse warehouse = new wareHouse();
